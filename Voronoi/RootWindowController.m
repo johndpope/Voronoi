@@ -20,13 +20,17 @@
 	
 	NSMenu *applicationMenu = [[NSMenu alloc] init];
 	
+	[applicationMenu addItemWithTitle:@"New Diagram" action:@selector(presentNewDiagramPanel) keyEquivalent:@"n"];
+	
+	[applicationMenu addItem:[NSMenuItem separatorItem]];
+	
 	[applicationMenu addItemWithTitle:[NSString stringWithFormat:@"Hide %@", [[NSProcessInfo processInfo] processName]] action:@selector(hide:) keyEquivalent:@"h"];
 	
 	[applicationMenu addItemWithTitle:@"Show All" action:@selector(unhideAllApplications:) keyEquivalent:@""];
 	
 	[applicationMenu addItem:[NSMenuItem separatorItem]];
 	
-	[applicationMenu addItemWithTitle:[NSString stringWithFormat:@"Hide %@", [[NSProcessInfo processInfo] processName]] action:@selector(terminate:) keyEquivalent:@"q"];
+	[applicationMenu addItemWithTitle:[NSString stringWithFormat:@"Quit %@", [[NSProcessInfo processInfo] processName]] action:@selector(terminate:) keyEquivalent:@"q"];
 	
 	NSMenuItem *menuItem = [[NSMenuItem alloc] init];
 	
@@ -35,6 +39,11 @@
 	[mainMenu addItem:menuItem];
 	
 	[[NSApplication sharedApplication] setMainMenu:mainMenu];
+}
+
+- (void)presentNewDiagramPanel
+{
+
 }
 
 #pragma mark - NSWindowController
