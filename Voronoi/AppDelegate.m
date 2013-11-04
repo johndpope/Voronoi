@@ -12,13 +12,20 @@
 
 @implementation AppDelegate
 
+#pragma mark - NSApplicationDelegate
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[self setWindow:[[NSWindow alloc] initWithContentRect:[[NSScreen mainScreen] frame] styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreRetained defer:YES]];
+	[self setWindow:[[NSWindow alloc] initWithContentRect:[[NSScreen mainScreen] frame] styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreBuffered defer:YES]];
 	
 	[self setRootWindowController:[[RootWindowController alloc] initWithWindow:[self window]]];
 	
 	[[self window] makeKeyAndOrderFront:self];
+}
+
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+	return YES;
 }
 
 @end
