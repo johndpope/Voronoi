@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13350FBC1828228500148C6E /* RootWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13350FBB1828228500148C6E /* RootWindowController.m */; };
 		13A5B1C718281FAE00B94AC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A5B1C618281FAE00B94AC8 /* Cocoa.framework */; };
 		13A5B1D118281FAE00B94AC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13A5B1CF18281FAE00B94AC8 /* InfoPlist.strings */; };
 		13A5B1D318281FAE00B94AC8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A5B1D218281FAE00B94AC8 /* main.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13350FBA1828228500148C6E /* RootWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootWindowController.h; sourceTree = "<group>"; };
+		13350FBB1828228500148C6E /* RootWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootWindowController.m; sourceTree = "<group>"; };
 		13A5B1C318281FAE00B94AC8 /* Voronoi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Voronoi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13A5B1C618281FAE00B94AC8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		13A5B1C918281FAE00B94AC8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -44,6 +47,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13350FB91828226E00148C6E /* Window Controller */ = {
+			isa = PBXGroup;
+			children = (
+				13350FBA1828228500148C6E /* RootWindowController.h */,
+				13350FBB1828228500148C6E /* RootWindowController.m */,
+			);
+			name = "Window Controller";
+			sourceTree = "<group>";
+		};
 		13A5B1BA18281FAE00B94AC8 = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +98,7 @@
 			children = (
 				13A5B1D818281FAE00B94AC8 /* AppDelegate.h */,
 				13A5B1D918281FAE00B94AC8 /* AppDelegate.m */,
+				13350FB91828226E00148C6E /* Window Controller */,
 				13A5B1DE18281FAE00B94AC8 /* Images.xcassets */,
 				13A5B1CD18281FAE00B94AC8 /* Supporting Files */,
 			);
@@ -169,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
 				13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */,
 				13A5B1D318281FAE00B94AC8 /* main.m in Sources */,
 			);

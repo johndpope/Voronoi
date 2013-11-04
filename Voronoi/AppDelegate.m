@@ -14,7 +14,9 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[self setWindow:[[NSWindow alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 100.0, 100.0) styleMask:NSTitledWindowMask backing:NSBackingStoreRetained defer:YES screen:[NSScreen mainScreen]]];
+	[self setWindow:[[NSWindow alloc] initWithContentRect:[[NSScreen mainScreen] frame] styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreRetained defer:YES]];
+	
+	[self setRootWindowController:[[RootWindowController alloc] initWithWindow:[self window]]];
 	
 	[[self window] makeKeyAndOrderFront:self];
 }
