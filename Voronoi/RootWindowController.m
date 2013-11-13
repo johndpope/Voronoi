@@ -10,6 +10,13 @@
 
 #import "RootWindowController.h"
 #import "NewDiagramPanel.h"
+#import "VoronoiView.h"
+
+@interface RootWindowController ()
+
+@property (nonatomic) VoronoiView *voronoiView;
+
+@end
 
 @implementation RootWindowController
 
@@ -66,6 +73,10 @@
 	{
 		[[self window] setTitle:[[NSProcessInfo processInfo] processName]];
 		[[self window] setDelegate:self];
+		
+		[self setVoronoiView:[[VoronoiView alloc] init]];
+		
+		[[self window] setContentView:[self voronoiView]];
 		
 		[self setupMenu];
 	}
