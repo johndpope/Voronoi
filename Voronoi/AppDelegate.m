@@ -16,7 +16,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	[self setWindow:[[NSWindow alloc] initWithContentRect:[[NSScreen mainScreen] frame] styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreBuffered defer:YES]];
+	[self setWindow:[[NSWindow alloc] initWithContentRect:NSInsetRect([[NSScreen mainScreen] frame], 125.0, 125.0) styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreBuffered defer:YES]];
 	
 	[self setRootWindowController:[[RootWindowController alloc] initWithWindow:[self window]]];
 	

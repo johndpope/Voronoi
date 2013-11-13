@@ -9,6 +9,7 @@
 //
 
 #import "RootWindowController.h"
+#import "NewDiagramPanel.h"
 
 @implementation RootWindowController
 
@@ -43,7 +44,16 @@
 
 - (void)presentNewDiagramPanel
 {
-
+	NewDiagramPanel *newDiagramPanel = [[NewDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 700.0, 350.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES];
+	
+	[[self window] beginSheet:newDiagramPanel completionHandler:^(NSModalResponse returnCode)
+	{
+		if(returnCode == NSModalResponseOK)
+		{
+			
+		}
+		
+	}];
 }
 
 #pragma mark - NSWindowController
