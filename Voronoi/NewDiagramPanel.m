@@ -52,21 +52,21 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		
 		NSView *contentView = (NSView *)[self contentView];
 		
-		[[self cancelButton] setBezelStyle:NSRoundedBezelStyle];
-		[[self cancelButton] setTitle:@"Cancel"];
-		[[self cancelButton] sizeToFit];
-		[[self cancelButton] setTarget:self];
-		[[self cancelButton] setAction:@selector(cancelButtonEventHandler:)];
-		[[self cancelButton] setFrameSize:NSMakeSize((self.cancelButton.frame.size.width + NewDiagramPanelPadding), self.cancelButton.frame.size.height)];
-		[[self cancelButton] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, NewDiagramPanelPadding)];
-		
 		[[self confirmButton] setBezelStyle:NSRoundedBezelStyle];
 		[[self confirmButton] setTitle:@"Confirm"];
 		[[self confirmButton] sizeToFit];
 		[[self confirmButton] setTarget:self];
 		[[self confirmButton] setAction:@selector(confirmButtonEventHandler:)];
-		[[self confirmButton] setFrameSize:NSMakeSize((self.confirmButton.frame.size.width + NewDiagramPanelPadding), self.confirmButton.frame.size.height)];
+		[[self confirmButton] setFrameSize:NSMakeSize((self.confirmButton.frame.size.width + (NewDiagramPanelPadding * 2.0)), self.confirmButton.frame.size.height)];
 		[[self confirmButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.confirmButton.frame.size.width + NewDiagramPanelPadding)), NewDiagramPanelPadding)];
+		
+		[[self cancelButton] setBezelStyle:NSRoundedBezelStyle];
+		[[self cancelButton] setTitle:@"Cancel"];
+		[[self cancelButton] sizeToFit];
+		[[self cancelButton] setTarget:self];
+		[[self cancelButton] setAction:@selector(cancelButtonEventHandler:)];
+		[[self cancelButton] setFrameSize:NSMakeSize((self.cancelButton.frame.size.width + (NewDiagramPanelPadding * 2.0)), self.cancelButton.frame.size.height)];
+		[[self cancelButton] setFrameOrigin:NSMakePoint((self.confirmButton.frame.origin.x - self.cancelButton.frame.size.width), NewDiagramPanelPadding)];
 		
 		[[self tabView] setFrame:NSMakeRect(NewDiagramPanelPadding, (self.cancelButton.frame.origin.y + self.cancelButton.frame.size.height), (contentView.frame.size.width - (NewDiagramPanelPadding * 2.0)), (contentView.frame.size.height - (self.cancelButton.frame.origin.y + self.cancelButton.frame.size.height + NewDiagramPanelPadding)))];
 		

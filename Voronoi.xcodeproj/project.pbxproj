@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1334FD1F182AC6C200657B69 /* NewDiagramPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1334FD1E182AC6C200657B69 /* NewDiagramPanel.m */; };
 		13350FBC1828228500148C6E /* RootWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13350FBB1828228500148C6E /* RootWindowController.m */; };
+		13461A92183423E100263477 /* VoronoiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13461A91183423E100263477 /* VoronoiView.m */; };
 		13A5B1C718281FAE00B94AC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A5B1C618281FAE00B94AC8 /* Cocoa.framework */; };
 		13A5B1D118281FAE00B94AC8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13A5B1CF18281FAE00B94AC8 /* InfoPlist.strings */; };
 		13A5B1D318281FAE00B94AC8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A5B1D218281FAE00B94AC8 /* main.m */; };
@@ -23,6 +24,8 @@
 		1334FD1E182AC6C200657B69 /* NewDiagramPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewDiagramPanel.m; sourceTree = "<group>"; };
 		13350FBA1828228500148C6E /* RootWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootWindowController.h; sourceTree = "<group>"; };
 		13350FBB1828228500148C6E /* RootWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootWindowController.m; sourceTree = "<group>"; };
+		13461A90183423E100263477 /* VoronoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoronoiView.h; sourceTree = "<group>"; };
+		13461A91183423E100263477 /* VoronoiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoronoiView.m; sourceTree = "<group>"; };
 		13A5B1C318281FAE00B94AC8 /* Voronoi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Voronoi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13A5B1C618281FAE00B94AC8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		13A5B1C918281FAE00B94AC8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -71,6 +74,15 @@
 			name = "Window Controller";
 			sourceTree = "<group>";
 		};
+		13461A8F183423D000263477 /* Voronoi View */ = {
+			isa = PBXGroup;
+			children = (
+				13461A90183423E100263477 /* VoronoiView.h */,
+				13461A91183423E100263477 /* VoronoiView.m */,
+			);
+			name = "Voronoi View";
+			sourceTree = "<group>";
+		};
 		13A5B1BA18281FAE00B94AC8 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +127,7 @@
 				13A5B1D918281FAE00B94AC8 /* AppDelegate.m */,
 				13350FB91828226E00148C6E /* Window Controller */,
 				1334FD1C182AC6AD00657B69 /* New Diagram Panel */,
+				13461A8F183423D000263477 /* Voronoi View */,
 				13F3BF0C182842D9003ED9CB /* MTRandom */,
 				13A5B1DE18281FAE00B94AC8 /* Images.xcassets */,
 				13A5B1CD18281FAE00B94AC8 /* Supporting Files */,
@@ -210,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1334FD1F182AC6C200657B69 /* NewDiagramPanel.m in Sources */,
+				13461A92183423E100263477 /* VoronoiView.m in Sources */,
 				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
 				13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */,
 				13A5B1D318281FAE00B94AC8 /* main.m in Sources */,
