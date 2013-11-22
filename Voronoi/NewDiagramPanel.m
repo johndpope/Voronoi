@@ -22,6 +22,12 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 @property (nonatomic) NSTextField *numberOfSitesTextField;
 @property (nonatomic) NSTextField *numberOfIterationsTextField;
 
+@property (nonatomic) NSTextField *diagramTypeLabel;
+@property (nonatomic) NSTextField *xMarginLabel;
+@property (nonatomic) NSTextField *yMarginLabel;
+@property (nonatomic) NSTextField *numberOfSitesLabel;
+@property (nonatomic) NSTextField *numberOfIterationsLabel;
+
 @end
 
 @implementation NewDiagramPanel
@@ -55,12 +61,15 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[self setDiagramTypePopUpButton:[[NSPopUpButton alloc] init]];
 		
 		[self setXMarginTextField:[[NSTextField alloc] init]];
-		
 		[self setYMarginTextField:[[NSTextField alloc] init]];
-		
 		[self setNumberOfSitesTextField:[[NSTextField alloc] init]];
-		
 		[self setNumberOfIterationsTextField:[[NSTextField alloc] init]];
+		
+		[self setDiagramTypeLabel:[[NSTextField alloc] init]];
+		[self setXMarginLabel:[[NSTextField alloc] init]];
+		[self setYMarginLabel:[[NSTextField alloc] init]];
+		[self setNumberOfSitesLabel:[[NSTextField alloc] init]];
+		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
 		
 		NSView *contentView = (NSView *)[self contentView];
 		
@@ -105,6 +114,46 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
 		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + NewDiagramPanelPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - NewDiagramPanelPadding))];
 		
+		[[self diagramTypeLabel] setStringValue:@"Diagram Type:"];
+		[[self diagramTypeLabel] setBezeled:NO];
+		[[self diagramTypeLabel] setDrawsBackground:NO];
+		[[self diagramTypeLabel] setEditable:NO];
+		[[self diagramTypeLabel] setSelectable:NO];
+		[[self diagramTypeLabel] sizeToFit];
+		[[self diagramTypeLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.diagramTypePopUpButton.frame.origin.y)];
+		
+		[[self xMarginLabel] setStringValue:@"Margin X:"];
+		[[self xMarginLabel] setBezeled:NO];
+		[[self xMarginLabel] setDrawsBackground:NO];
+		[[self xMarginLabel] setEditable:NO];
+		[[self xMarginLabel] setSelectable:NO];
+		[[self xMarginLabel] sizeToFit];
+		[[self xMarginLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.xMarginTextField.frame.origin.y)];
+		
+		[[self yMarginLabel] setStringValue:@"Margin Y:"];
+		[[self yMarginLabel] setBezeled:NO];
+		[[self yMarginLabel] setDrawsBackground:NO];
+		[[self yMarginLabel] setEditable:NO];
+		[[self yMarginLabel] setSelectable:NO];
+		[[self yMarginLabel] sizeToFit];
+		[[self yMarginLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.yMarginTextField.frame.origin.y)];
+		
+		[[self numberOfSitesLabel] setStringValue:@"Total Sites:"];
+		[[self numberOfSitesLabel] setBezeled:NO];
+		[[self numberOfSitesLabel] setDrawsBackground:NO];
+		[[self numberOfSitesLabel] setEditable:NO];
+		[[self numberOfSitesLabel] setSelectable:NO];
+		[[self numberOfSitesLabel] sizeToFit];
+		[[self numberOfSitesLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.numberOfSitesTextField.frame.origin.y)];
+		
+		[[self numberOfIterationsLabel] setStringValue:@"Iterations:"];
+		[[self numberOfIterationsLabel] setBezeled:NO];
+		[[self numberOfIterationsLabel] setDrawsBackground:NO];
+		[[self numberOfIterationsLabel] setEditable:NO];
+		[[self numberOfIterationsLabel] setSelectable:NO];
+		[[self numberOfIterationsLabel] sizeToFit];
+		[[self numberOfIterationsLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.numberOfIterationsTextField.frame.origin.y)];
+		
 		[[self contentView] addSubview:[self cancelButton]];
 		[[self contentView] addSubview:[self confirmButton]];
 		[[self contentView] addSubview:[self diagramTypePopUpButton]];
@@ -112,6 +161,11 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self contentView] addSubview:[self yMarginTextField]];
 		[[self contentView] addSubview:[self numberOfSitesTextField]];
 		[[self contentView] addSubview:[self numberOfIterationsTextField]];
+		[[self contentView] addSubview:[self diagramTypeLabel]];
+		[[self contentView] addSubview:[self xMarginLabel]];
+		[[self contentView] addSubview:[self yMarginLabel]];
+		[[self contentView] addSubview:[self numberOfSitesLabel]];
+		[[self contentView] addSubview:[self numberOfIterationsLabel]];
 	}
 	
 	return self;
