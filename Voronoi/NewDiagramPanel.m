@@ -16,7 +16,9 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 
 @property (nonatomic) NSButton *cancelButton;
 @property (nonatomic) NSButton *confirmButton;
-@property (nonatomic) NSTabView *tabView;
+@property (nonatomic) NSPopUpButton *diagramTypePopUpButton;
+@property (nonatomic) NSTextField *xMarginTextField;
+@property (nonatomic) NSTextField *yMarginTextField;
 
 @end
 
@@ -48,7 +50,11 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		
 		[self setConfirmButton:[[NSButton alloc] init]];
 		
-		[self setTabView:[[NSTabView alloc] init]];
+		[self setDiagramTypePopUpButton:[[NSPopUpButton alloc] init]];
+		
+		[self setXMarginTextField:[[NSTextField alloc] init]];
+		
+		[self setYMarginTextField:[[NSTextField alloc] init]];
 		
 		NSView *contentView = (NSView *)[self contentView];
 		
@@ -68,25 +74,28 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self cancelButton] setFrameSize:NSMakeSize((self.cancelButton.frame.size.width + (NewDiagramPanelPadding * 2.0)), self.cancelButton.frame.size.height)];
 		[[self cancelButton] setFrameOrigin:NSMakePoint((self.confirmButton.frame.origin.x - self.cancelButton.frame.size.width), NewDiagramPanelPadding)];
 		
-		[[self tabView] setFrame:NSMakeRect(NewDiagramPanelPadding, (self.cancelButton.frame.origin.y + self.cancelButton.frame.size.height), (contentView.frame.size.width - (NewDiagramPanelPadding * 2.0)), (contentView.frame.size.height - (self.cancelButton.frame.origin.y + self.cancelButton.frame.size.height + NewDiagramPanelPadding)))];
+		[[self diagramTypePopUpButton] addItemWithTitle:@"Grid"];
+		[[self diagramTypePopUpButton] addItemWithTitle:@"Random"];
+		[[self diagramTypePopUpButton] addItemWithTitle:@"Spiral"];
+		[[self diagramTypePopUpButton] selectItemWithTitle:@"Random"];
 		
-		NSTabViewItem *tabViewItem = nil;
+		[[self diagramTypePopUpButton] sizeToFit];
+		[[self diagramTypePopUpButton] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.diagramTypePopUpButton.frame.size.height)];
+		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + NewDiagramPanelPadding)), (contentView.frame.size.height - (NewDiagramPanelPadding * 4.0)))];
 		
-		tabViewItem = [[NSTabViewItem alloc] init];
-		[tabViewItem setLabel:@"Grid"];
-		[[self tabView] addTabViewItem:tabViewItem];
+		[[self xMarginTextField] sizeToFit];
+		[[self xMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.xMarginTextField.frame.size.height)];
+		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - NewDiagramPanelPadding))];
 		
-		tabViewItem = [[NSTabViewItem alloc] init];
-		[tabViewItem setLabel:@"Spiral"];
-		[[self tabView] addTabViewItem:tabViewItem];
-		
-		tabViewItem = [[NSTabViewItem alloc] init];
-		[tabViewItem setLabel:@"Random"];
-		[[self tabView] addTabViewItem:tabViewItem];
+		[[self yMarginTextField] sizeToFit];
+		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
+		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
 		
 		[[self contentView] addSubview:[self cancelButton]];
 		[[self contentView] addSubview:[self confirmButton]];
-		[[self contentView] addSubview:[self tabView]];
+		[[self contentView] addSubview:[self diagramTypePopUpButton]];
+		[[self contentView] addSubview:[self xMarginTextField]];
+		[[self contentView] addSubview:[self yMarginTextField]];
 	}
 	
 	return self;
