@@ -19,6 +19,8 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 @property (nonatomic) NSPopUpButton *diagramTypePopUpButton;
 @property (nonatomic) NSTextField *xMarginTextField;
 @property (nonatomic) NSTextField *yMarginTextField;
+@property (nonatomic) NSTextField *numberOfSitesTextField;
+@property (nonatomic) NSTextField *numberOfIterationsTextField;
 
 @end
 
@@ -56,6 +58,10 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		
 		[self setYMarginTextField:[[NSTextField alloc] init]];
 		
+		[self setNumberOfSitesTextField:[[NSTextField alloc] init]];
+		
+		[self setNumberOfIterationsTextField:[[NSTextField alloc] init]];
+		
 		NSView *contentView = (NSView *)[self contentView];
 		
 		[[self confirmButton] setBezelStyle:NSRoundedBezelStyle];
@@ -91,11 +97,21 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
 		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
 		
+		[[self numberOfSitesTextField] sizeToFit];
+		[[self numberOfSitesTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfSitesTextField.frame.size.height)];
+		[[self numberOfSitesTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfSitesTextField.frame.size.width + NewDiagramPanelPadding)), ((self.yMarginTextField.frame.origin.y - self.yMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
+		
+		[[self numberOfIterationsTextField] sizeToFit];
+		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
+		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + NewDiagramPanelPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - NewDiagramPanelPadding))];
+		
 		[[self contentView] addSubview:[self cancelButton]];
 		[[self contentView] addSubview:[self confirmButton]];
 		[[self contentView] addSubview:[self diagramTypePopUpButton]];
 		[[self contentView] addSubview:[self xMarginTextField]];
 		[[self contentView] addSubview:[self yMarginTextField]];
+		[[self contentView] addSubview:[self numberOfSitesTextField]];
+		[[self contentView] addSubview:[self numberOfIterationsTextField]];
 	}
 	
 	return self;
