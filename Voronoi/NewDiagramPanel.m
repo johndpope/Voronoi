@@ -27,6 +27,7 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 @property (nonatomic) NSTextField *yMarginLabel;
 @property (nonatomic) NSTextField *numberOfSitesLabel;
 @property (nonatomic) NSTextField *numberOfIterationsLabel;
+@property (nonatomic) NSNumberFormatter *numberFormatter;
 
 @end
 
@@ -71,6 +72,10 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[self setNumberOfSitesLabel:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
 		
+		[self setNumberFormatter:[[NSNumberFormatter alloc] init]];
+		
+		[[self numberFormatter] setNumberStyle:NSNumberFormatterDecimalStyle];
+		
 		NSView *contentView = (NSView *)[self contentView];
 		
 		[[self confirmButton] setBezelStyle:NSRoundedBezelStyle];
@@ -98,18 +103,22 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self diagramTypePopUpButton] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.diagramTypePopUpButton.frame.size.height)];
 		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + NewDiagramPanelPadding)), (contentView.frame.size.height - (NewDiagramPanelPadding * 4.0)))];
 		
+		[[self xMarginTextField] setFormatter:[self numberFormatter]];
 		[[self xMarginTextField] sizeToFit];
 		[[self xMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.xMarginTextField.frame.size.height)];
 		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - NewDiagramPanelPadding))];
 		
+		[[self yMarginTextField] setFormatter:[self numberFormatter]];
 		[[self yMarginTextField] sizeToFit];
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
 		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
 		
+		[[self numberOfSitesTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfSitesTextField] sizeToFit];
 		[[self numberOfSitesTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfSitesTextField.frame.size.height)];
 		[[self numberOfSitesTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfSitesTextField.frame.size.width + NewDiagramPanelPadding)), ((self.yMarginTextField.frame.origin.y - self.yMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
 		
+		[[self numberOfIterationsTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfIterationsTextField] sizeToFit];
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
 		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + NewDiagramPanelPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - NewDiagramPanelPadding))];
@@ -169,6 +178,11 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 	}
 	
 	return self;
+}
+
+- (BOOL)canBecomeKeyWindow
+{
+	return YES;
 }
 
 @end
