@@ -10,6 +10,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface RootWindowController : NSWindowController <NSWindowDelegate>
+#import "CreateDiagramPanel.h"
+
+@interface RootWindowController : NSWindowController <NSWindowDelegate, CreateDiagramPanelDelegate>
 
 @end

@@ -38,12 +38,25 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 
 - (void)cancelButtonEventHandler:(id)sender
 {
-	[[self sheetParent] endSheet:self returnCode:NSModalResponseCancel];
+	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanelDidCancel:)])
+	{
+		[[self diagramDelegate] createDiagramPanelDidCancel:self];
+	}
 }
 
 - (void)confirmButtonEventHandler:(id)sender
 {
-	[[self sheetParent] endSheet:self returnCode:NSModalResponseOK];
+	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanel:didConfirmDiagramType:withXMargin:yMargin:numberOfSites:numberOfIterations:spiralChord:)])
+	{
+		DiagramType diagramType = DiagramTypeGrid;
+		NSInteger xMargin = 0;
+		NSInteger yMargin = 0;
+		NSInteger numberOfSites = 0;
+		NSInteger numberOfIterations = 0;
+		CGFloat spiralChord = 0.0;
+		
+		[[self diagramDelegate] createDiagramPanel:self didConfirmDiagramType:diagramType withXMargin:xMargin yMargin:yMargin numberOfSites:numberOfSites numberOfIterations:numberOfIterations spiralChord:spiralChord];
+	}
 }
 
 #pragma mark - NSPanel

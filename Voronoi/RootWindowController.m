@@ -9,7 +9,7 @@
 //
 
 #import "RootWindowController.h"
-#import "CreateDiagramPanel.h"
+
 #import "VoronoiView.h"
 
 @interface RootWindowController ()
@@ -20,6 +20,20 @@
 @end
 
 @implementation RootWindowController
+
+#pragma mark - CreateDiagramPanel
+
+- (void)createDiagramPanel:(CreateDiagramPanel *)panel didConfirmDiagramType:(DiagramType)diagramType withXMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfSites:(NSInteger)numberOfSites numberOfIterations:(NSInteger)numberOfIterations spiralChord:(CGFloat)spiralChord
+{
+	[[self window] endSheet:panel];
+	
+	
+}
+
+- (void)createDiagramPanelDidCancel:(CreateDiagramPanel *)panel
+{
+	[[self window] endSheet:panel];
+}
 
 #pragma mark - RootWindowController
 
@@ -69,6 +83,8 @@
 		[self setVoronoiView:[[VoronoiView alloc] init]];
 		
 		[self setCreateDiagramPanel:[[CreateDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 280.0, 280.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]];
+		
+		[[self createDiagramPanel] setDiagramDelegate:self];
 		
 		[[self window] setContentView:[self voronoiView]];
 		
