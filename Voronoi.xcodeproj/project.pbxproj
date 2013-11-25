@@ -17,6 +17,7 @@
 		13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A5B1D918281FAE00B94AC8 /* AppDelegate.m */; };
 		13A5B1DF18281FAE00B94AC8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A5B1DE18281FAE00B94AC8 /* Images.xcassets */; };
 		13F3BF0F182842D9003ED9CB /* MTRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F3BF0E182842D9003ED9CB /* MTRandom.m */; };
+		1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825B1A21843821E00FED617 /* NumberFormatter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,8 @@
 		13A5B1E518281FAE00B94AC8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		13F3BF0D182842D9003ED9CB /* MTRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTRandom.h; sourceTree = "<group>"; };
 		13F3BF0E182842D9003ED9CB /* MTRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTRandom.m; sourceTree = "<group>"; };
+		1825B1A11843821E00FED617 /* NumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberFormatter.h; sourceTree = "<group>"; };
+		1825B1A21843821E00FED617 /* NumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberFormatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +64,7 @@
 			children = (
 				1334FD1D182AC6C200657B69 /* CreateDiagramPanel.h */,
 				1334FD1E182AC6C200657B69 /* CreateDiagramPanel.m */,
+				1825B1A01843820A00FED617 /* Number Formatter */,
 			);
 			name = "Create Diagram Panel";
 			sourceTree = "<group>";
@@ -157,6 +161,15 @@
 			path = Submodules/MTRandom/MTRandom;
 			sourceTree = SOURCE_ROOT;
 		};
+		1825B1A01843820A00FED617 /* Number Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				1825B1A11843821E00FED617 /* NumberFormatter.h */,
+				1825B1A21843821E00FED617 /* NumberFormatter.m */,
+			);
+			name = "Number Formatter";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -226,6 +239,7 @@
 				13461A92183423E100263477 /* VoronoiView.m in Sources */,
 				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
 				13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */,
+				1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */,
 				13A5B1D318281FAE00B94AC8 /* main.m in Sources */,
 				13F3BF0F182842D9003ED9CB /* MTRandom.m in Sources */,
 			);

@@ -10,6 +10,8 @@
 
 #import "CreateDiagramPanel.h"
 
+#import "NumberFormatter.h"
+
 CGFloat const CreateDiagramPanelPadding = 10.0;
 
 @interface CreateDiagramPanel ()
@@ -88,7 +90,7 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
 		[self setSpiralChordLabel:[[NSTextField alloc] init]];
 		
-		[self setNumberFormatter:[[NSNumberFormatter alloc] init]];
+		[self setNumberFormatter:[[NumberFormatter alloc] init]];
 		
 		[[self numberFormatter] setNumberStyle:NSNumberFormatterDecimalStyle];
 		
