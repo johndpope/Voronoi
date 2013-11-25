@@ -21,12 +21,13 @@ CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 @property (nonatomic) NSTextField *yMarginTextField;
 @property (nonatomic) NSTextField *numberOfSitesTextField;
 @property (nonatomic) NSTextField *numberOfIterationsTextField;
-
+@property (nonatomic) NSTextField *spiralChordTextField;
 @property (nonatomic) NSTextField *diagramTypeLabel;
 @property (nonatomic) NSTextField *xMarginLabel;
 @property (nonatomic) NSTextField *yMarginLabel;
 @property (nonatomic) NSTextField *numberOfSitesLabel;
 @property (nonatomic) NSTextField *numberOfIterationsLabel;
+@property (nonatomic) NSTextField *spiralChordLabel;
 @property (nonatomic) NSNumberFormatter *numberFormatter;
 
 @end
@@ -65,12 +66,14 @@ CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 		[self setYMarginTextField:[[NSTextField alloc] init]];
 		[self setNumberOfSitesTextField:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsTextField:[[NSTextField alloc] init]];
+		[self setSpiralChordTextField:[[NSTextField alloc] init]];
 		
 		[self setDiagramTypeLabel:[[NSTextField alloc] init]];
 		[self setXMarginLabel:[[NSTextField alloc] init]];
 		[self setYMarginLabel:[[NSTextField alloc] init]];
 		[self setNumberOfSitesLabel:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
+		[self setSpiralChordLabel:[[NSTextField alloc] init]];
 		
 		[self setNumberFormatter:[[NSNumberFormatter alloc] init]];
 		
@@ -123,6 +126,11 @@ CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
 		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - CreateDiagramPanelControllerPadding))];
 		
+		[[self spiralChordTextField] setFormatter:[self numberFormatter]];
+		[[self spiralChordTextField] sizeToFit];
+		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
+		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.numberOfIterationsTextField.frame.origin.y - self.numberOfIterationsTextField.frame.size.height) - CreateDiagramPanelControllerPadding))];
+		
 		[[self diagramTypeLabel] setStringValue:@"Diagram Type:"];
 		[[self diagramTypeLabel] setBezeled:NO];
 		[[self diagramTypeLabel] setDrawsBackground:NO];
@@ -163,6 +171,14 @@ CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 		[[self numberOfIterationsLabel] sizeToFit];
 		[[self numberOfIterationsLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.numberOfIterationsTextField.frame.origin.y)];
 		
+		[[self spiralChordLabel] setStringValue:@"Spiral Chord:"];
+		[[self spiralChordLabel] setBezeled:NO];
+		[[self spiralChordLabel] setDrawsBackground:NO];
+		[[self spiralChordLabel] setEditable:NO];
+		[[self spiralChordLabel] setSelectable:NO];
+		[[self spiralChordLabel] sizeToFit];
+		[[self spiralChordLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.spiralChordTextField.frame.origin.y)];
+		
 		[contentView addSubview:[self cancelButton]];
 		[contentView addSubview:[self confirmButton]];
 		[contentView addSubview:[self diagramTypePopUpButton]];
@@ -170,19 +186,16 @@ CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 		[contentView addSubview:[self yMarginTextField]];
 		[contentView addSubview:[self numberOfSitesTextField]];
 		[contentView addSubview:[self numberOfIterationsTextField]];
+		[contentView addSubview:[self spiralChordTextField]];
 		[contentView addSubview:[self diagramTypeLabel]];
 		[contentView addSubview:[self xMarginLabel]];
 		[contentView addSubview:[self yMarginLabel]];
 		[contentView addSubview:[self numberOfSitesLabel]];
 		[contentView addSubview:[self numberOfIterationsLabel]];
+		[contentView addSubview:[self spiralChordLabel]];
 	}
 	
 	return self;
-}
-
-- (BOOL)canBecomeKeyWindow
-{
-	return YES;
 }
 
 @end

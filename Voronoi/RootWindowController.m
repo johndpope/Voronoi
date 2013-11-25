@@ -68,7 +68,7 @@
 		
 		[self setVoronoiView:[[VoronoiView alloc] init]];
 		
-		[self setCreateDiagramPanelController:[[CreateDiagramPanelController alloc] initWithWindow:[[NSPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 300.0, 300.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]]];
+		[self setCreateDiagramPanelController:[[CreateDiagramPanelController alloc] initWithWindow:[[NSPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 280.0, 280.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]]];
 		
 		[[self window] setContentView:[self voronoiView]];
 		
