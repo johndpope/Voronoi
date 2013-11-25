@@ -63,6 +63,45 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 	}
 }
 
+- (void)diagramTypePopUpButtonEventHandler:(id)sender
+{
+	NSMenuItem *menuItem = [[self diagramTypePopUpButton] selectedItem];
+	
+	DiagramType diagramType = [[self diagramTypePopUpButton] indexOfItem:menuItem];
+	
+	switch(diagramType)
+	{
+		default:
+		case DiagramTypeGrid:
+		{
+			[[self spiralChordTextField] setEnabled:NO];
+			[[self spiralChordTextField] setEditable:NO];
+			[[self spiralChordTextField] setSelectable:NO];
+			
+			//bail
+			break;
+		}
+		case DiagramTypeRandom:
+		{
+			[[self spiralChordTextField] setEnabled:NO];
+			[[self spiralChordTextField] setEditable:NO];
+			[[self spiralChordTextField] setSelectable:NO];
+			
+			//bail
+			break;
+		}
+		case DiagramTypeSpiral:
+		{
+			[[self spiralChordTextField] setEnabled:YES];
+			[[self spiralChordTextField] setEditable:YES];
+			[[self spiralChordTextField] setSelectable:YES];
+			
+			//bail
+			break;
+		}
+	}
+}
+
 #pragma mark - NSPanel
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
@@ -122,6 +161,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self diagramTypePopUpButton] sizeToFit];
 		[[self diagramTypePopUpButton] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.diagramTypePopUpButton.frame.size.height)];
 		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + CreateDiagramPanelPadding)), (contentView.frame.size.height - (CreateDiagramPanelPadding * 4.0)))];
+		[[self diagramTypePopUpButton] setTarget:self];
+		[[self diagramTypePopUpButton] setAction:@selector(diagramTypePopUpButtonEventHandler:)];
 		
 		[[self xMarginTextField] setFormatter:[self numberFormatter]];
 		[[self xMarginTextField] sizeToFit];
@@ -145,6 +186,9 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		
 		[[self spiralChordTextField] setFormatter:[self numberFormatter]];
 		[[self spiralChordTextField] sizeToFit];
+		[[self spiralChordTextField] setEnabled:NO];
+		[[self spiralChordTextField] setEditable:NO];
+		[[self spiralChordTextField] setSelectable:NO];
 		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
 		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.numberOfIterationsTextField.frame.origin.y - self.numberOfIterationsTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
