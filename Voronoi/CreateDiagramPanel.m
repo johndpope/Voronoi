@@ -50,12 +50,14 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 {
 	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanel:didConfirmDiagramType:withXMargin:yMargin:numberOfSites:numberOfIterations:spiralChord:)])
 	{
-		DiagramType diagramType = DiagramTypeGrid;
-		NSInteger xMargin = 0;
-		NSInteger yMargin = 0;
-		NSInteger numberOfSites = 0;
-		NSInteger numberOfIterations = 0;
-		CGFloat spiralChord = 0.0;
+		NSMenuItem *menuItem = [[self diagramTypePopUpButton] selectedItem];
+		
+		DiagramType diagramType = [[self diagramTypePopUpButton] indexOfItem:menuItem];
+		NSInteger xMargin = [[self xMarginTextField] integerValue];
+		NSInteger yMargin = [[self yMarginTextField] integerValue];
+		NSInteger numberOfSites = [[self numberOfSitesTextField] integerValue];
+		NSInteger numberOfIterations = [[self numberOfIterationsTextField] integerValue];
+		CGFloat spiralChord = [[self spiralChordTextField] floatValue];
 		
 		[[self diagramDelegate] createDiagramPanel:self didConfirmDiagramType:diagramType withXMargin:xMargin yMargin:yMargin numberOfSites:numberOfSites numberOfIterations:numberOfIterations spiralChord:spiralChord];
 	}
