@@ -1,18 +1,18 @@
 //
 //*******
 //
-//	filename: NewDiagramPanel.m
+//	filename: CreateDiagramPanelController.m
 //	author: Zack Brown
 //	date: 06/11/2013
 //
 //*******
 //
 
-#import "NewDiagramPanel.h"
+#import "CreateDiagramPanelController.h"
 
-CGFloat const NewDiagramPanelPadding = 10.0;
+CGFloat const CreateDiagramPanelControllerPadding = 10.0;
 
-@interface NewDiagramPanel ()
+@interface CreateDiagramPanelController ()
 
 @property (nonatomic) NSButton *cancelButton;
 @property (nonatomic) NSButton *confirmButton;
@@ -31,29 +31,29 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 
 @end
 
-@implementation NewDiagramPanel
+@implementation CreateDiagramPanelController
 
-#pragma mark - NewDiagramPanel
+#pragma mark - CreateDiagramPanelController
 
 - (void)cancelButtonEventHandler:(id)sender
 {
-	[[self sheetParent] endSheet:self returnCode:NSModalResponseCancel];
+	[[[self window] sheetParent] endSheet:[self window] returnCode:NSModalResponseCancel];
 }
 
 - (void)confirmButtonEventHandler:(id)sender
 {
-	[[self sheetParent] endSheet:self returnCode:NSModalResponseOK];
+	[[[self window] sheetParent] endSheet:[self window] returnCode:NSModalResponseOK];
 }
 
 #pragma mark - NSPanel
 
-- (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
+- (id)initWithWindow:(NSWindow *)window
 {
-	self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag];
+	self = [super initWithWindow:window];
 	
 	if(self)
 	{
-		[self setPreventsApplicationTerminationWhenModal:NO];
+		[[self window] setPreventsApplicationTerminationWhenModal:NO];
 		
 		[self setCancelButton:[[NSButton alloc] init]];
 		
@@ -76,23 +76,23 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		
 		[[self numberFormatter] setNumberStyle:NSNumberFormatterDecimalStyle];
 		
-		NSView *contentView = (NSView *)[self contentView];
+		NSView *contentView = (NSView *)[[self window] contentView];
 		
 		[[self confirmButton] setBezelStyle:NSRoundedBezelStyle];
 		[[self confirmButton] setTitle:@"Confirm"];
 		[[self confirmButton] sizeToFit];
 		[[self confirmButton] setTarget:self];
 		[[self confirmButton] setAction:@selector(confirmButtonEventHandler:)];
-		[[self confirmButton] setFrameSize:NSMakeSize((self.confirmButton.frame.size.width + (NewDiagramPanelPadding * 2.0)), self.confirmButton.frame.size.height)];
-		[[self confirmButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.confirmButton.frame.size.width + NewDiagramPanelPadding)), NewDiagramPanelPadding)];
+		[[self confirmButton] setFrameSize:NSMakeSize((self.confirmButton.frame.size.width + (CreateDiagramPanelControllerPadding * 2.0)), self.confirmButton.frame.size.height)];
+		[[self confirmButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.confirmButton.frame.size.width + CreateDiagramPanelControllerPadding)), CreateDiagramPanelControllerPadding)];
 		
 		[[self cancelButton] setBezelStyle:NSRoundedBezelStyle];
 		[[self cancelButton] setTitle:@"Cancel"];
 		[[self cancelButton] sizeToFit];
 		[[self cancelButton] setTarget:self];
 		[[self cancelButton] setAction:@selector(cancelButtonEventHandler:)];
-		[[self cancelButton] setFrameSize:NSMakeSize((self.cancelButton.frame.size.width + (NewDiagramPanelPadding * 2.0)), self.cancelButton.frame.size.height)];
-		[[self cancelButton] setFrameOrigin:NSMakePoint((self.confirmButton.frame.origin.x - self.cancelButton.frame.size.width), NewDiagramPanelPadding)];
+		[[self cancelButton] setFrameSize:NSMakeSize((self.cancelButton.frame.size.width + (CreateDiagramPanelControllerPadding * 2.0)), self.cancelButton.frame.size.height)];
+		[[self cancelButton] setFrameOrigin:NSMakePoint((self.confirmButton.frame.origin.x - self.cancelButton.frame.size.width), CreateDiagramPanelControllerPadding)];
 		
 		[[self diagramTypePopUpButton] addItemWithTitle:@"Grid"];
 		[[self diagramTypePopUpButton] addItemWithTitle:@"Random"];
@@ -101,27 +101,27 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		
 		[[self diagramTypePopUpButton] sizeToFit];
 		[[self diagramTypePopUpButton] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.diagramTypePopUpButton.frame.size.height)];
-		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + NewDiagramPanelPadding)), (contentView.frame.size.height - (NewDiagramPanelPadding * 4.0)))];
+		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + CreateDiagramPanelControllerPadding)), (contentView.frame.size.height - (CreateDiagramPanelControllerPadding * 4.0)))];
 		
 		[[self xMarginTextField] setFormatter:[self numberFormatter]];
 		[[self xMarginTextField] sizeToFit];
 		[[self xMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.xMarginTextField.frame.size.height)];
-		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - NewDiagramPanelPadding))];
+		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - CreateDiagramPanelControllerPadding))];
 		
 		[[self yMarginTextField] setFormatter:[self numberFormatter]];
 		[[self yMarginTextField] sizeToFit];
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
-		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + NewDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
+		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - CreateDiagramPanelControllerPadding))];
 		
 		[[self numberOfSitesTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfSitesTextField] sizeToFit];
 		[[self numberOfSitesTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfSitesTextField.frame.size.height)];
-		[[self numberOfSitesTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfSitesTextField.frame.size.width + NewDiagramPanelPadding)), ((self.yMarginTextField.frame.origin.y - self.yMarginTextField.frame.size.height) - NewDiagramPanelPadding))];
+		[[self numberOfSitesTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfSitesTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.yMarginTextField.frame.origin.y - self.yMarginTextField.frame.size.height) - CreateDiagramPanelControllerPadding))];
 		
 		[[self numberOfIterationsTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfIterationsTextField] sizeToFit];
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
-		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + NewDiagramPanelPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - NewDiagramPanelPadding))];
+		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + CreateDiagramPanelControllerPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - CreateDiagramPanelControllerPadding))];
 		
 		[[self diagramTypeLabel] setStringValue:@"Diagram Type:"];
 		[[self diagramTypeLabel] setBezeled:NO];
@@ -129,7 +129,7 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self diagramTypeLabel] setEditable:NO];
 		[[self diagramTypeLabel] setSelectable:NO];
 		[[self diagramTypeLabel] sizeToFit];
-		[[self diagramTypeLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.diagramTypePopUpButton.frame.origin.y)];
+		[[self diagramTypeLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.diagramTypePopUpButton.frame.origin.y)];
 		
 		[[self xMarginLabel] setStringValue:@"Margin X:"];
 		[[self xMarginLabel] setBezeled:NO];
@@ -137,7 +137,7 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self xMarginLabel] setEditable:NO];
 		[[self xMarginLabel] setSelectable:NO];
 		[[self xMarginLabel] sizeToFit];
-		[[self xMarginLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.xMarginTextField.frame.origin.y)];
+		[[self xMarginLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.xMarginTextField.frame.origin.y)];
 		
 		[[self yMarginLabel] setStringValue:@"Margin Y:"];
 		[[self yMarginLabel] setBezeled:NO];
@@ -145,7 +145,7 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self yMarginLabel] setEditable:NO];
 		[[self yMarginLabel] setSelectable:NO];
 		[[self yMarginLabel] sizeToFit];
-		[[self yMarginLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.yMarginTextField.frame.origin.y)];
+		[[self yMarginLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.yMarginTextField.frame.origin.y)];
 		
 		[[self numberOfSitesLabel] setStringValue:@"Total Sites:"];
 		[[self numberOfSitesLabel] setBezeled:NO];
@@ -153,7 +153,7 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self numberOfSitesLabel] setEditable:NO];
 		[[self numberOfSitesLabel] setSelectable:NO];
 		[[self numberOfSitesLabel] sizeToFit];
-		[[self numberOfSitesLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.numberOfSitesTextField.frame.origin.y)];
+		[[self numberOfSitesLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.numberOfSitesTextField.frame.origin.y)];
 		
 		[[self numberOfIterationsLabel] setStringValue:@"Iterations:"];
 		[[self numberOfIterationsLabel] setBezeled:NO];
@@ -161,20 +161,20 @@ CGFloat const NewDiagramPanelPadding = 10.0;
 		[[self numberOfIterationsLabel] setEditable:NO];
 		[[self numberOfIterationsLabel] setSelectable:NO];
 		[[self numberOfIterationsLabel] sizeToFit];
-		[[self numberOfIterationsLabel] setFrameOrigin:NSMakePoint(NewDiagramPanelPadding, self.numberOfIterationsTextField.frame.origin.y)];
+		[[self numberOfIterationsLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelControllerPadding, self.numberOfIterationsTextField.frame.origin.y)];
 		
-		[[self contentView] addSubview:[self cancelButton]];
-		[[self contentView] addSubview:[self confirmButton]];
-		[[self contentView] addSubview:[self diagramTypePopUpButton]];
-		[[self contentView] addSubview:[self xMarginTextField]];
-		[[self contentView] addSubview:[self yMarginTextField]];
-		[[self contentView] addSubview:[self numberOfSitesTextField]];
-		[[self contentView] addSubview:[self numberOfIterationsTextField]];
-		[[self contentView] addSubview:[self diagramTypeLabel]];
-		[[self contentView] addSubview:[self xMarginLabel]];
-		[[self contentView] addSubview:[self yMarginLabel]];
-		[[self contentView] addSubview:[self numberOfSitesLabel]];
-		[[self contentView] addSubview:[self numberOfIterationsLabel]];
+		[contentView addSubview:[self cancelButton]];
+		[contentView addSubview:[self confirmButton]];
+		[contentView addSubview:[self diagramTypePopUpButton]];
+		[contentView addSubview:[self xMarginTextField]];
+		[contentView addSubview:[self yMarginTextField]];
+		[contentView addSubview:[self numberOfSitesTextField]];
+		[contentView addSubview:[self numberOfIterationsTextField]];
+		[contentView addSubview:[self diagramTypeLabel]];
+		[contentView addSubview:[self xMarginLabel]];
+		[contentView addSubview:[self yMarginLabel]];
+		[contentView addSubview:[self numberOfSitesLabel]];
+		[contentView addSubview:[self numberOfIterationsLabel]];
 	}
 	
 	return self;
