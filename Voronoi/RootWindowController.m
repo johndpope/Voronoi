@@ -9,12 +9,13 @@
 //
 
 #import "RootWindowController.h"
-#import "NewDiagramPanel.h"
+#import "CreateDiagramPanelController.h"
 #import "VoronoiView.h"
 
 @interface RootWindowController ()
 
 @property (nonatomic) VoronoiView *voronoiView;
+@property (nonatomic) CreateDiagramPanelController *createDiagramPanelController;
 
 @end
 
@@ -51,16 +52,7 @@
 
 - (void)presentNewDiagramPanel
 {
-	NewDiagramPanel *newDiagramPanel = [[NewDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 350.0, 350.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES];
-	
-	[[self window] beginSheet:newDiagramPanel completionHandler:^(NSModalResponse returnCode)
-	{
-		if(returnCode == NSModalResponseOK)
-		{
-			
-		}
-		
-	}];
+	[[self window] beginSheet:[[self createDiagramPanelController] window] completionHandler:nil];
 }
 
 #pragma mark - NSWindowController
@@ -75,6 +67,8 @@
 		[[self window] setDelegate:self];
 		
 		[self setVoronoiView:[[VoronoiView alloc] init]];
+		
+		[self setCreateDiagramPanelController:[[CreateDiagramPanelController alloc] initWithWindow:[[NSPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 300.0, 300.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]]];
 		
 		[[self window] setContentView:[self voronoiView]];
 		
