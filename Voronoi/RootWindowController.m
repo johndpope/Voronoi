@@ -23,7 +23,7 @@
 
 #pragma mark - CreateDiagramPanel
 
-- (void)createDiagramPanel:(CreateDiagramPanel *)panel didConfirmDiagramType:(DiagramType)diagramType withXMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfSites:(NSInteger)numberOfSites numberOfIterations:(NSInteger)numberOfIterations spiralChord:(CGFloat)spiralChord
+- (void)createDiagramPanel:(CreateDiagramPanel *)panel didConfirmDiagramType:(DiagramType)diagramType withXMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfSites:(NSInteger)numberOfSites numberOfIterations:(NSInteger)numberOfIterations seed:(NSInteger)seed spiralChord:(CGFloat)spiralChord
 {
 	[[self window] endSheet:panel];
 	

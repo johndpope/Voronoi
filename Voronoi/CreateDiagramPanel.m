@@ -11,6 +11,7 @@
 #import "CreateDiagramPanel.h"
 
 #import "NumberFormatter.h"
+#import "MTRandom.h"
 
 CGFloat const CreateDiagramPanelPadding = 10.0;
 
@@ -24,13 +25,16 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 @property (nonatomic) NSTextField *numberOfSitesTextField;
 @property (nonatomic) NSTextField *numberOfIterationsTextField;
 @property (nonatomic) NSTextField *spiralChordTextField;
+@property (nonatomic) NSTextField *seedTextField;
 @property (nonatomic) NSTextField *diagramTypeLabel;
 @property (nonatomic) NSTextField *xMarginLabel;
 @property (nonatomic) NSTextField *yMarginLabel;
 @property (nonatomic) NSTextField *numberOfSitesLabel;
 @property (nonatomic) NSTextField *numberOfIterationsLabel;
 @property (nonatomic) NSTextField *spiralChordLabel;
+@property (nonatomic) NSTextField *seedLabel;
 @property (nonatomic) NSNumberFormatter *numberFormatter;
+@property (nonatomic) MTRandom *randomNumberGenerator;
 
 @end
 
@@ -57,9 +61,67 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		NSInteger yMargin = [[self yMarginTextField] integerValue];
 		NSInteger numberOfSites = [[self numberOfSitesTextField] integerValue];
 		NSInteger numberOfIterations = [[self numberOfIterationsTextField] integerValue];
+		NSInteger seed = [[self seedTextField] integerValue];
 		CGFloat spiralChord = [[self spiralChordTextField] floatValue];
 		
-		[[self diagramDelegate] createDiagramPanel:self didConfirmDiagramType:diagramType withXMargin:xMargin yMargin:yMargin numberOfSites:numberOfSites numberOfIterations:numberOfIterations spiralChord:spiralChord];
+		NSView *contentView = self.sheetParent.contentView;
+		
+		CGFloat xMarginLimit = (contentView.frame.size.width - 100.0);
+		CGFloat yMarginLimit = (contentView.frame.size.height - 100.0);
+		
+		if(xMargin > xMarginLimit)
+		{
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert setMessageText:@"Invalid Diagram Settings"];
+			[alert setInformativeText:[NSString stringWithFormat:@"X margin must not exceed %f", xMarginLimit]];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert beginSheetModalForWindow:self completionHandler:nil];
+			
+			return;
+		}
+		
+		if(yMargin > yMarginLimit)
+		{
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert setMessageText:@"Invalid Diagram Settings"];
+			[alert setInformativeText:[NSString stringWithFormat:@"Y margin must not exceed %f", yMarginLimit]];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert beginSheetModalForWindow:self completionHandler:nil];
+			
+			return;
+		}
+		
+		if(numberOfSites == 0)
+		{
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert setMessageText:@"Invalid Diagram Settings"];
+			[alert setInformativeText:@"Number of sites must be greater than zero."];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert beginSheetModalForWindow:self completionHandler:nil];
+			
+			return;
+		}
+		
+		if(numberOfIterations == 0)
+		{
+			NSAlert *alert = [[NSAlert alloc] init];
+			
+			[alert setMessageText:@"Invalid Diagram Settings"];
+			[alert setInformativeText:@"Number of iterations must be greater than zero."];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert beginSheetModalForWindow:self completionHandler:nil];
+			
+			return;
+		}
+		
+		[[self diagramDelegate] createDiagramPanel:self didConfirmDiagramType:diagramType withXMargin:xMargin yMargin:yMargin numberOfSites:numberOfSites numberOfIterations:numberOfIterations seed:seed spiralChord:spiralChord];
 	}
 }
 
@@ -123,6 +185,7 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[self setNumberOfSitesTextField:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsTextField:[[NSTextField alloc] init]];
 		[self setSpiralChordTextField:[[NSTextField alloc] init]];
+		[self setSeedTextField:[[NSTextField alloc] init]];
 		
 		[self setDiagramTypeLabel:[[NSTextField alloc] init]];
 		[self setXMarginLabel:[[NSTextField alloc] init]];
@@ -130,8 +193,11 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[self setNumberOfSitesLabel:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
 		[self setSpiralChordLabel:[[NSTextField alloc] init]];
+		[self setSeedLabel:[[NSTextField alloc] init]];
 		
 		[self setNumberFormatter:[[NumberFormatter alloc] init]];
+		
+		[self setRandomNumberGenerator:[[MTRandom alloc] init]];
 		
 		[[self numberFormatter] setNumberStyle:NSNumberFormatterDecimalStyle];
 		
@@ -156,29 +222,33 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self diagramTypePopUpButton] addItemWithTitle:@"Grid"];
 		[[self diagramTypePopUpButton] addItemWithTitle:@"Random"];
 		[[self diagramTypePopUpButton] addItemWithTitle:@"Spiral"];
-		[[self diagramTypePopUpButton] selectItemWithTitle:@"Random"];
 		
+		[[self diagramTypePopUpButton] selectItemWithTitle:@"Random"];
 		[[self diagramTypePopUpButton] sizeToFit];
 		[[self diagramTypePopUpButton] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.diagramTypePopUpButton.frame.size.height)];
 		[[self diagramTypePopUpButton] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.diagramTypePopUpButton.frame.size.width + CreateDiagramPanelPadding)), (contentView.frame.size.height - (CreateDiagramPanelPadding * 4.0)))];
 		[[self diagramTypePopUpButton] setTarget:self];
 		[[self diagramTypePopUpButton] setAction:@selector(diagramTypePopUpButtonEventHandler:)];
 		
+		[[self xMarginTextField] setFloatValue:0.0];
 		[[self xMarginTextField] setFormatter:[self numberFormatter]];
 		[[self xMarginTextField] sizeToFit];
 		[[self xMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.xMarginTextField.frame.size.height)];
 		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - CreateDiagramPanelPadding))];
 		
+		[[self yMarginTextField] setFloatValue:0.0];
 		[[self yMarginTextField] setFormatter:[self numberFormatter]];
 		[[self yMarginTextField] sizeToFit];
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
 		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
+		[[self numberOfSitesTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32From:1 to:100]];
 		[[self numberOfSitesTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfSitesTextField] sizeToFit];
 		[[self numberOfSitesTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfSitesTextField.frame.size.height)];
 		[[self numberOfSitesTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfSitesTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.yMarginTextField.frame.origin.y - self.yMarginTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
+		[[self numberOfIterationsTextField] setIntegerValue:1];
 		[[self numberOfIterationsTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfIterationsTextField] sizeToFit];
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
@@ -191,6 +261,12 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self spiralChordTextField] setSelectable:NO];
 		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
 		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.numberOfIterationsTextField.frame.origin.y - self.numberOfIterationsTextField.frame.size.height) - CreateDiagramPanelPadding))];
+		
+		[[self seedTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32]];
+		[[self seedTextField] setFormatter:[self numberFormatter]];
+		[[self seedTextField] sizeToFit];
+		[[self seedTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.seedTextField.frame.size.height)];
+		[[self seedTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.seedTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.spiralChordTextField.frame.origin.y - self.spiralChordTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
 		[[self diagramTypeLabel] setStringValue:@"Diagram Type:"];
 		[[self diagramTypeLabel] setBezeled:NO];
@@ -240,6 +316,14 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self spiralChordLabel] sizeToFit];
 		[[self spiralChordLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.spiralChordTextField.frame.origin.y)];
 		
+		[[self seedLabel] setStringValue:@"Seed:"];
+		[[self seedLabel] setBezeled:NO];
+		[[self seedLabel] setDrawsBackground:NO];
+		[[self seedLabel] setEditable:NO];
+		[[self seedLabel] setSelectable:NO];
+		[[self seedLabel] sizeToFit];
+		[[self seedLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.seedTextField.frame.origin.y)];
+		
 		[contentView addSubview:[self cancelButton]];
 		[contentView addSubview:[self confirmButton]];
 		[contentView addSubview:[self diagramTypePopUpButton]];
@@ -248,12 +332,14 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[contentView addSubview:[self numberOfSitesTextField]];
 		[contentView addSubview:[self numberOfIterationsTextField]];
 		[contentView addSubview:[self spiralChordTextField]];
+		[contentView addSubview:[self seedTextField]];
 		[contentView addSubview:[self diagramTypeLabel]];
 		[contentView addSubview:[self xMarginLabel]];
 		[contentView addSubview:[self yMarginLabel]];
 		[contentView addSubview:[self numberOfSitesLabel]];
 		[contentView addSubview:[self numberOfIterationsLabel]];
 		[contentView addSubview:[self spiralChordLabel]];
+		[contentView addSubview:[self seedLabel]];
 	}
 	
 	return self;
