@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1334FD1F182AC6C200657B69 /* CreateDiagramPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1334FD1E182AC6C200657B69 /* CreateDiagramPanelController.m */; };
+		1334FD1F182AC6C200657B69 /* CreateDiagramPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1334FD1E182AC6C200657B69 /* CreateDiagramPanel.m */; };
 		13350FBC1828228500148C6E /* RootWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13350FBB1828228500148C6E /* RootWindowController.m */; };
 		13461A92183423E100263477 /* VoronoiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13461A91183423E100263477 /* VoronoiView.m */; };
 		13A5B1C718281FAE00B94AC8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A5B1C618281FAE00B94AC8 /* Cocoa.framework */; };
@@ -20,8 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1334FD1D182AC6C200657B69 /* CreateDiagramPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDiagramPanelController.h; sourceTree = "<group>"; };
-		1334FD1E182AC6C200657B69 /* CreateDiagramPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDiagramPanelController.m; sourceTree = "<group>"; };
+		1334FD1D182AC6C200657B69 /* CreateDiagramPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateDiagramPanel.h; sourceTree = "<group>"; };
+		1334FD1E182AC6C200657B69 /* CreateDiagramPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDiagramPanel.m; sourceTree = "<group>"; };
 		13350FBA1828228500148C6E /* RootWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootWindowController.h; sourceTree = "<group>"; };
 		13350FBB1828228500148C6E /* RootWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootWindowController.m; sourceTree = "<group>"; };
 		13461A90183423E100263477 /* VoronoiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoronoiView.h; sourceTree = "<group>"; };
@@ -59,8 +59,8 @@
 		1334FD1C182AC6AD00657B69 /* Create Diagram Panel */ = {
 			isa = PBXGroup;
 			children = (
-				1334FD1D182AC6C200657B69 /* CreateDiagramPanelController.h */,
-				1334FD1E182AC6C200657B69 /* CreateDiagramPanelController.m */,
+				1334FD1D182AC6C200657B69 /* CreateDiagramPanel.h */,
+				1334FD1E182AC6C200657B69 /* CreateDiagramPanel.m */,
 			);
 			name = "Create Diagram Panel";
 			sourceTree = "<group>";
@@ -222,7 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1334FD1F182AC6C200657B69 /* CreateDiagramPanelController.m in Sources */,
+				1334FD1F182AC6C200657B69 /* CreateDiagramPanel.m in Sources */,
 				13461A92183423E100263477 /* VoronoiView.m in Sources */,
 				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
 				13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */,
