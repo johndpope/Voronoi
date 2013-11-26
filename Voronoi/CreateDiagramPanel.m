@@ -52,7 +52,7 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 
 - (void)confirmButtonEventHandler:(id)sender
 {
-	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanel:didConfirmDiagramType:withXMargin:yMargin:numberOfSites:numberOfIterations:spiralChord:)])
+	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanel:didConfirmDiagramType:withXMargin:yMargin:numberOfSites:numberOfIterations:seed:spiralChord:)])
 	{
 		NSMenuItem *menuItem = [[self diagramTypePopUpButton] selectedItem];
 		
@@ -136,32 +136,36 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		default:
 		case DiagramTypeGrid:
 		{
-			[[self spiralChordTextField] setEnabled:NO];
-			[[self spiralChordTextField] setEditable:NO];
-			[[self spiralChordTextField] setSelectable:NO];
+			[self makeTextField:[self numberOfSitesTextField] active:YES];
+			[self makeTextField:[self spiralChordTextField] active:NO];
 			
 			//bail
 			break;
 		}
 		case DiagramTypeRandom:
 		{
-			[[self spiralChordTextField] setEnabled:NO];
-			[[self spiralChordTextField] setEditable:NO];
-			[[self spiralChordTextField] setSelectable:NO];
+			[self makeTextField:[self numberOfSitesTextField] active:YES];
+			[self makeTextField:[self spiralChordTextField] active:NO];
 			
 			//bail
 			break;
 		}
 		case DiagramTypeSpiral:
 		{
-			[[self spiralChordTextField] setEnabled:YES];
-			[[self spiralChordTextField] setEditable:YES];
-			[[self spiralChordTextField] setSelectable:YES];
+			[self makeTextField:[self numberOfSitesTextField] active:NO];
+			[self makeTextField:[self spiralChordTextField] active:YES];
 			
 			//bail
 			break;
 		}
 	}
+}
+
+- (void)makeTextField:(NSTextField *)textField active:(BOOL)active
+{
+	[textField setEnabled:active];
+	[textField setEditable:active];
+	[textField setSelectable:active];
 }
 
 #pragma mark - NSPanel
