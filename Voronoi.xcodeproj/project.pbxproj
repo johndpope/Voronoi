@@ -18,6 +18,7 @@
 		13A5B1DF18281FAE00B94AC8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A5B1DE18281FAE00B94AC8 /* Images.xcassets */; };
 		13F3BF0F182842D9003ED9CB /* MTRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F3BF0E182842D9003ED9CB /* MTRandom.m */; };
 		1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825B1A21843821E00FED617 /* NumberFormatter.m */; };
+		18279CC31844CBEF003E8B5F /* VoronoiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC21844CBEF003E8B5F /* VoronoiEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,8 @@
 		13F3BF0E182842D9003ED9CB /* MTRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTRandom.m; sourceTree = "<group>"; };
 		1825B1A11843821E00FED617 /* NumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberFormatter.h; sourceTree = "<group>"; };
 		1825B1A21843821E00FED617 /* NumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberFormatter.m; sourceTree = "<group>"; };
+		18279CC11844CBEF003E8B5F /* VoronoiEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiEvent.h; path = Voronoi/VoronoiEvent.h; sourceTree = "<group>"; };
+		18279CC21844CBEF003E8B5F /* VoronoiEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoronoiEvent.m; path = Voronoi/VoronoiEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,7 @@
 				13A5B1D918281FAE00B94AC8 /* AppDelegate.m */,
 				13350FB91828226E00148C6E /* Window Controller */,
 				1334FD1C182AC6AD00657B69 /* Create Diagram Panel */,
+				18279CBD1844CBC4003E8B5F /* Voronoi */,
 				13461A8F183423D000263477 /* Voronoi View */,
 				13F3BF0C182842D9003ED9CB /* MTRandom */,
 				13A5B1DE18281FAE00B94AC8 /* Images.xcassets */,
@@ -168,6 +172,15 @@
 				1825B1A21843821E00FED617 /* NumberFormatter.m */,
 			);
 			name = "Number Formatter";
+			sourceTree = "<group>";
+		};
+		18279CBD1844CBC4003E8B5F /* Voronoi */ = {
+			isa = PBXGroup;
+			children = (
+				18279CC11844CBEF003E8B5F /* VoronoiEvent.h */,
+				18279CC21844CBEF003E8B5F /* VoronoiEvent.m */,
+			);
+			name = Voronoi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +255,7 @@
 				1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */,
 				13A5B1D318281FAE00B94AC8 /* main.m in Sources */,
 				13F3BF0F182842D9003ED9CB /* MTRandom.m in Sources */,
+				18279CC31844CBEF003E8B5F /* VoronoiEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
