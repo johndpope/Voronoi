@@ -21,7 +21,9 @@ typedef NS_ENUM(NSInteger, DiagramType)
 
 @protocol CreateDiagramPanelDelegate <NSObject>
 
-- (void)createDiagramPanel:(CreateDiagramPanel *)panel didConfirmDiagramType:(DiagramType)diagramType withXMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfSites:(NSInteger)numberOfSites numberOfIterations:(NSInteger)numberOfIterations seed:(NSInteger)seed spiralChord:(CGFloat)spiralChord;
+- (void)createDiagramPanelDidConfirmWithGridDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations columns:(NSInteger)columns rows:(NSInteger)rows;
+- (void)createDiagramPanelDidConfirmWithRandomDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations numberOfSites:(NSInteger)numberOfSites seed:(NSInteger)seed;
+- (void)createDiagramPanelDidConfirmWithSpiralDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations spiralChord:(CGFloat)spiralChord;
 - (void)createDiagramPanelDidCancel:(CreateDiagramPanel *)panel;
 
 @end

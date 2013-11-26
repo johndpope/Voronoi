@@ -14,6 +14,7 @@
 #import "MTRandom.h"
 
 CGFloat const CreateDiagramPanelPadding = 10.0;
+CGFloat const DiagramMinimumRequiredRegion = 100.0;
 
 @interface CreateDiagramPanel ()
 
@@ -24,6 +25,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 @property (nonatomic) NSTextField *yMarginTextField;
 @property (nonatomic) NSTextField *numberOfSitesTextField;
 @property (nonatomic) NSTextField *numberOfIterationsTextField;
+@property (nonatomic) NSTextField *gridColumnsTextField;
+@property (nonatomic) NSTextField *gridRowsTextField;
 @property (nonatomic) NSTextField *spiralChordTextField;
 @property (nonatomic) NSTextField *seedTextField;
 @property (nonatomic) NSTextField *diagramTypeLabel;
@@ -31,6 +34,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 @property (nonatomic) NSTextField *yMarginLabel;
 @property (nonatomic) NSTextField *numberOfSitesLabel;
 @property (nonatomic) NSTextField *numberOfIterationsLabel;
+@property (nonatomic) NSTextField *gridColumnsLabel;
+@property (nonatomic) NSTextField *gridRowsLabel;
 @property (nonatomic) NSTextField *spiralChordLabel;
 @property (nonatomic) NSTextField *seedLabel;
 @property (nonatomic) NSNumberFormatter *numberFormatter;
@@ -52,76 +57,134 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 
 - (void)confirmButtonEventHandler:(id)sender
 {
-	if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanel:didConfirmDiagramType:withXMargin:yMargin:numberOfSites:numberOfIterations:seed:spiralChord:)])
+	NSMenuItem *menuItem = [[self diagramTypePopUpButton] selectedItem];
+		
+	DiagramType diagramType = [[self diagramTypePopUpButton] indexOfItem:menuItem];
+	NSInteger xMargin = [[self xMarginTextField] integerValue];
+	NSInteger yMargin = [[self yMarginTextField] integerValue];
+	NSInteger numberOfSites = [[self numberOfSitesTextField] integerValue];
+	NSInteger numberOfIterations = [[self numberOfIterationsTextField] integerValue];
+	NSInteger columns = [[self gridColumnsTextField] integerValue];
+	NSInteger rows = [[self gridRowsTextField] integerValue];
+	NSInteger seed = [[self seedTextField] integerValue];
+	CGFloat spiralChord = [[self spiralChordTextField] floatValue];
+	
+	NSView *contentView = self.sheetParent.contentView;
+	
+	CGFloat xMarginLimit = (contentView.frame.size.width - DiagramMinimumRequiredRegion);
+	CGFloat yMarginLimit = (contentView.frame.size.height - DiagramMinimumRequiredRegion);
+	
+	if(xMargin > xMarginLimit)
 	{
-		NSMenuItem *menuItem = [[self diagramTypePopUpButton] selectedItem];
+		NSAlert *alert = [[NSAlert alloc] init];
 		
-		DiagramType diagramType = [[self diagramTypePopUpButton] indexOfItem:menuItem];
-		NSInteger xMargin = [[self xMarginTextField] integerValue];
-		NSInteger yMargin = [[self yMarginTextField] integerValue];
-		NSInteger numberOfSites = [[self numberOfSitesTextField] integerValue];
-		NSInteger numberOfIterations = [[self numberOfIterationsTextField] integerValue];
-		NSInteger seed = [[self seedTextField] integerValue];
-		CGFloat spiralChord = [[self spiralChordTextField] floatValue];
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:[NSString stringWithFormat:@"X margin must not exceed %f", xMarginLimit]];
+		[alert setAlertStyle:NSWarningAlertStyle];
 		
-		NSView *contentView = self.sheetParent.contentView;
+		[alert beginSheetModalForWindow:self completionHandler:nil];
 		
-		CGFloat xMarginLimit = (contentView.frame.size.width - 100.0);
-		CGFloat yMarginLimit = (contentView.frame.size.height - 100.0);
+		return;
+	}
+	
+	if(yMargin > yMarginLimit)
+	{
+		NSAlert *alert = [[NSAlert alloc] init];
 		
-		if(xMargin > xMarginLimit)
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:[NSString stringWithFormat:@"Y margin must not exceed %f", yMarginLimit]];
+		[alert setAlertStyle:NSWarningAlertStyle];
+		
+		[alert beginSheetModalForWindow:self completionHandler:nil];
+		
+		return;
+	}
+	
+	if(diagramType == DiagramTypeRandom && numberOfSites == 0)
+	{
+		NSAlert *alert = [[NSAlert alloc] init];
+		
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:@"Number of sites must be greater than zero."];
+		[alert setAlertStyle:NSWarningAlertStyle];
+		
+		[alert beginSheetModalForWindow:self completionHandler:nil];
+		
+		return;
+	}
+	
+	if(numberOfIterations == 0)
+	{
+		NSAlert *alert = [[NSAlert alloc] init];
+		
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:@"Number of iterations must be greater than zero."];
+		[alert setAlertStyle:NSWarningAlertStyle];
+		
+		[alert beginSheetModalForWindow:self completionHandler:nil];
+		
+		return;
+	}
+	
+	if(diagramType == DiagramTypeGrid && columns == 0)
+	{
+		NSAlert *alert = [[NSAlert alloc] init];
+		
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:@"Number of columns must be greater than zero."];
+		[alert setAlertStyle:NSWarningAlertStyle];
+		
+		[alert beginSheetModalForWindow:self completionHandler:nil];
+		
+		return;
+	}
+	
+	if(diagramType == DiagramTypeGrid && rows == 0)
+	{
+		NSAlert *alert = [[NSAlert alloc] init];
+		
+		[alert setMessageText:@"Invalid Diagram Settings"];
+		[alert setInformativeText:@"Number of rows must be greater than zero."];
+		[alert setAlertStyle:NSWarningAlertStyle];
+		
+		[alert beginSheetModalForWindow:self completionHandler:nil];
+		
+		return;
+	}
+	
+	switch(diagramType)
+	{
+		default:
+		case DiagramTypeGrid:
 		{
-			NSAlert *alert = [[NSAlert alloc] init];
+			if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanelDidConfirmWithGridDiagramType:xMargin:yMargin:numberOfIterations:columns:rows:)])
+			{
+				[[self diagramDelegate] createDiagramPanelDidConfirmWithGridDiagramType:self xMargin:xMargin yMargin:yMargin numberOfIterations:numberOfIterations columns:columns rows:rows];
+			}
 			
-			[alert setMessageText:@"Invalid Diagram Settings"];
-			[alert setInformativeText:[NSString stringWithFormat:@"X margin must not exceed %f", xMarginLimit]];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			[alert beginSheetModalForWindow:self completionHandler:nil];
-			
-			return;
+			//bail
+			break;
 		}
-		
-		if(yMargin > yMarginLimit)
+		case DiagramTypeRandom:
 		{
-			NSAlert *alert = [[NSAlert alloc] init];
+			if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanelDidConfirmWithRandomDiagramType:xMargin:yMargin:numberOfIterations:numberOfSites:seed:)])
+			{
+				[[self diagramDelegate] createDiagramPanelDidConfirmWithRandomDiagramType:self xMargin:xMargin yMargin:yMargin numberOfIterations:numberOfIterations numberOfSites:numberOfSites seed:seed];
+			}
 			
-			[alert setMessageText:@"Invalid Diagram Settings"];
-			[alert setInformativeText:[NSString stringWithFormat:@"Y margin must not exceed %f", yMarginLimit]];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			[alert beginSheetModalForWindow:self completionHandler:nil];
-			
-			return;
+			//bail
+			break;
 		}
-		
-		if(numberOfSites == 0)
+		case DiagramTypeSpiral:
 		{
-			NSAlert *alert = [[NSAlert alloc] init];
+			if([self diagramDelegate] && [[self diagramDelegate] respondsToSelector:@selector(createDiagramPanelDidConfirmWithSpiralDiagramType:xMargin:yMargin:numberOfIterations:spiralChord:)])
+			{
+				[[self diagramDelegate] createDiagramPanelDidConfirmWithSpiralDiagramType:self xMargin:xMargin yMargin:yMargin numberOfIterations:numberOfIterations spiralChord:spiralChord];
+			}
 			
-			[alert setMessageText:@"Invalid Diagram Settings"];
-			[alert setInformativeText:@"Number of sites must be greater than zero."];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			[alert beginSheetModalForWindow:self completionHandler:nil];
-			
-			return;
+			//bail
+			break;
 		}
-		
-		if(numberOfIterations == 0)
-		{
-			NSAlert *alert = [[NSAlert alloc] init];
-			
-			[alert setMessageText:@"Invalid Diagram Settings"];
-			[alert setInformativeText:@"Number of iterations must be greater than zero."];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			[alert beginSheetModalForWindow:self completionHandler:nil];
-			
-			return;
-		}
-		
-		[[self diagramDelegate] createDiagramPanel:self didConfirmDiagramType:diagramType withXMargin:xMargin yMargin:yMargin numberOfSites:numberOfSites numberOfIterations:numberOfIterations seed:seed spiralChord:spiralChord];
 	}
 }
 
@@ -136,8 +199,11 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		default:
 		case DiagramTypeGrid:
 		{
-			[self makeTextField:[self numberOfSitesTextField] active:YES];
+			[self makeTextField:[self numberOfSitesTextField] active:NO];
+			[self makeTextField:[self gridColumnsTextField] active:YES];
+			[self makeTextField:[self gridRowsTextField] active:YES];
 			[self makeTextField:[self spiralChordTextField] active:NO];
+			[self makeTextField:[self seedTextField] active:NO];
 			
 			//bail
 			break;
@@ -145,7 +211,10 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		case DiagramTypeRandom:
 		{
 			[self makeTextField:[self numberOfSitesTextField] active:YES];
+			[self makeTextField:[self gridColumnsTextField] active:NO];
+			[self makeTextField:[self gridRowsTextField] active:NO];
 			[self makeTextField:[self spiralChordTextField] active:NO];
+			[self makeTextField:[self seedTextField] active:YES];
 			
 			//bail
 			break;
@@ -153,7 +222,10 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		case DiagramTypeSpiral:
 		{
 			[self makeTextField:[self numberOfSitesTextField] active:NO];
+			[self makeTextField:[self gridColumnsTextField] active:NO];
+			[self makeTextField:[self gridRowsTextField] active:NO];
 			[self makeTextField:[self spiralChordTextField] active:YES];
+			[self makeTextField:[self seedTextField] active:NO];
 			
 			//bail
 			break;
@@ -188,6 +260,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[self setYMarginTextField:[[NSTextField alloc] init]];
 		[self setNumberOfSitesTextField:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsTextField:[[NSTextField alloc] init]];
+		[self setGridColumnsTextField:[[NSTextField alloc] init]];
+		[self setGridRowsTextField:[[NSTextField alloc] init]];
 		[self setSpiralChordTextField:[[NSTextField alloc] init]];
 		[self setSeedTextField:[[NSTextField alloc] init]];
 		
@@ -196,6 +270,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[self setYMarginLabel:[[NSTextField alloc] init]];
 		[self setNumberOfSitesLabel:[[NSTextField alloc] init]];
 		[self setNumberOfIterationsLabel:[[NSTextField alloc] init]];
+		[self setGridColumnsLabel:[[NSTextField alloc] init]];
+		[self setGridRowsLabel:[[NSTextField alloc] init]];
 		[self setSpiralChordLabel:[[NSTextField alloc] init]];
 		[self setSeedLabel:[[NSTextField alloc] init]];
 		
@@ -258,13 +334,23 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self numberOfIterationsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfIterationsTextField.frame.size.height)];
 		[[self numberOfIterationsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.numberOfIterationsTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.numberOfSitesTextField.frame.origin.y - self.numberOfSitesTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
+		[[self gridColumnsTextField] setIntegerValue:10];
+		[[self gridColumnsTextField] setFormatter:[self numberFormatter]];
+		[[self gridColumnsTextField] sizeToFit];
+		[[self gridColumnsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.gridColumnsTextField.frame.size.height)];
+		[[self gridColumnsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.gridColumnsTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.numberOfIterationsTextField.frame.origin.y - self.numberOfIterationsTextField.frame.size.height) - CreateDiagramPanelPadding))];
+		
+		[[self gridRowsTextField] setIntegerValue:10];
+		[[self gridRowsTextField] setFormatter:[self numberFormatter]];
+		[[self gridRowsTextField] sizeToFit];
+		[[self gridRowsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.gridRowsTextField.frame.size.height)];
+		[[self gridRowsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.gridRowsTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.gridColumnsTextField.frame.origin.y - self.gridColumnsTextField.frame.size.height) - CreateDiagramPanelPadding))];
+		
+		[[self spiralChordTextField] setIntegerValue:10];
 		[[self spiralChordTextField] setFormatter:[self numberFormatter]];
 		[[self spiralChordTextField] sizeToFit];
-		[[self spiralChordTextField] setEnabled:NO];
-		[[self spiralChordTextField] setEditable:NO];
-		[[self spiralChordTextField] setSelectable:NO];
 		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
-		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.numberOfIterationsTextField.frame.origin.y - self.numberOfIterationsTextField.frame.size.height) - CreateDiagramPanelPadding))];
+		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.gridRowsTextField.frame.origin.y - self.gridRowsTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
 		[[self seedTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32]];
 		[[self seedTextField] setFormatter:[self numberFormatter]];
@@ -312,6 +398,22 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self numberOfIterationsLabel] sizeToFit];
 		[[self numberOfIterationsLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.numberOfIterationsTextField.frame.origin.y)];
 		
+		[[self gridColumnsLabel] setStringValue:@"Columns:"];
+		[[self gridColumnsLabel] setBezeled:NO];
+		[[self gridColumnsLabel] setDrawsBackground:NO];
+		[[self gridColumnsLabel] setEditable:NO];
+		[[self gridColumnsLabel] setSelectable:NO];
+		[[self gridColumnsLabel] sizeToFit];
+		[[self gridColumnsLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.gridColumnsTextField.frame.origin.y)];
+		
+		[[self gridRowsLabel] setStringValue:@"Rows:"];
+		[[self gridRowsLabel] setBezeled:NO];
+		[[self gridRowsLabel] setDrawsBackground:NO];
+		[[self gridRowsLabel] setEditable:NO];
+		[[self gridRowsLabel] setSelectable:NO];
+		[[self gridRowsLabel] sizeToFit];
+		[[self gridRowsLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.gridRowsTextField.frame.origin.y)];
+		
 		[[self spiralChordLabel] setStringValue:@"Spiral Chord:"];
 		[[self spiralChordLabel] setBezeled:NO];
 		[[self spiralChordLabel] setDrawsBackground:NO];
@@ -328,6 +430,10 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[[self seedLabel] sizeToFit];
 		[[self seedLabel] setFrameOrigin:NSMakePoint(CreateDiagramPanelPadding, self.seedTextField.frame.origin.y)];
 		
+		[self makeTextField:[self gridColumnsTextField] active:NO];
+		[self makeTextField:[self gridRowsTextField] active:NO];
+		[self makeTextField:[self spiralChordTextField] active:NO];
+		
 		[contentView addSubview:[self cancelButton]];
 		[contentView addSubview:[self confirmButton]];
 		[contentView addSubview:[self diagramTypePopUpButton]];
@@ -335,6 +441,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[contentView addSubview:[self yMarginTextField]];
 		[contentView addSubview:[self numberOfSitesTextField]];
 		[contentView addSubview:[self numberOfIterationsTextField]];
+		[contentView addSubview:[self gridColumnsTextField]];
+		[contentView addSubview:[self gridRowsTextField]];
 		[contentView addSubview:[self spiralChordTextField]];
 		[contentView addSubview:[self seedTextField]];
 		[contentView addSubview:[self diagramTypeLabel]];
@@ -342,6 +450,8 @@ CGFloat const CreateDiagramPanelPadding = 10.0;
 		[contentView addSubview:[self yMarginLabel]];
 		[contentView addSubview:[self numberOfSitesLabel]];
 		[contentView addSubview:[self numberOfIterationsLabel]];
+		[contentView addSubview:[self gridColumnsLabel]];
+		[contentView addSubview:[self gridRowsLabel]];
 		[contentView addSubview:[self spiralChordLabel]];
 		[contentView addSubview:[self seedLabel]];
 	}

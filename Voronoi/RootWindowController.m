@@ -23,11 +23,40 @@
 
 #pragma mark - CreateDiagramPanel
 
-- (void)createDiagramPanel:(CreateDiagramPanel *)panel didConfirmDiagramType:(DiagramType)diagramType withXMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfSites:(NSInteger)numberOfSites numberOfIterations:(NSInteger)numberOfIterations seed:(NSInteger)seed spiralChord:(CGFloat)spiralChord
+- (void)createDiagramPanelDidConfirmWithGridDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations columns:(NSInteger)columns rows:(NSInteger)rows
 {
 	[[self window] endSheet:panel];
 	
+	NSView *contentView = self.window.contentView;
 	
+	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
+	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
+	
+	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+}
+
+- (void)createDiagramPanelDidConfirmWithRandomDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations numberOfSites:(NSInteger)numberOfSites seed:(NSInteger)seed
+{
+	[[self window] endSheet:panel];
+	
+	NSView *contentView = self.window.contentView;
+	
+	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
+	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
+	
+	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+}
+
+- (void)createDiagramPanelDidConfirmWithSpiralDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations spiralChord:(CGFloat)spiralChord
+{
+	[[self window] endSheet:panel];
+	
+	NSView *contentView = self.window.contentView;
+	
+	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
+	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
+	
+	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
 }
 
 - (void)createDiagramPanelDidCancel:(CreateDiagramPanel *)panel
@@ -82,7 +111,7 @@
 		
 		[self setVoronoiView:[[VoronoiView alloc] init]];
 		
-		[self setCreateDiagramPanel:[[CreateDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 280.0, 280.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]];
+		[self setCreateDiagramPanel:[[CreateDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 280.0, 350.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]];
 		
 		[[self createDiagramPanel] setDiagramDelegate:self];
 		
