@@ -13,6 +13,7 @@
 
 @interface VoronoiSolver ()
 
+@property (nonatomic) NSRect bounds;
 @property (nonatomic) NSMutableArray *siteEvents;
 
 @end
@@ -30,8 +31,34 @@
 
 - (void)addSiteEvents:(NSArray *)siteEvents
 {
-	[[self siteEvents] addObjectsFromArray:[siteEvents sortedArrayUsingComparator:^NSComparisonResult(VoronoiSiteEvent *siteEvent, VoronoiSiteEvent *other)
+	__block CGFloat x = 0.0;
+	__block CGFloat y = 0.0;
+	__block CGFloat width = 0.0;
+	__block CGFloat height = 0.0;
+	
+	__block NSInteger index = 0;
+	
+	[[self siteEvents] addObjectsFromArray:siteEvents];
+	
+	[[self siteEvents] sortUsingComparator:^NSComparisonResult(VoronoiSiteEvent *siteEvent, VoronoiSiteEvent *other)
 	{
+		if(index == 0)
+		{
+			x = siteEvent.position.x;
+			y = siteEvent.position.y;
+			width = siteEvent.position.x;
+			height = siteEvent.position.y;
+			
+			++index;
+		}
+		else
+		{
+			x = MIN(x, siteEvent.position.x);
+			y = MIN(y, siteEvent.position.y);
+			width = MAX(width, siteEvent.position.x);
+			height = MAX(height, siteEvent.position.y);
+		}
+		
 		if(CGPointEqualToPoint([siteEvent position], [other position]))
 		{
 			return NSOrderedSame;
@@ -44,7 +71,9 @@
 		
 		return NSOrderedDescending;
 	
-	}]];
+	}];
+	
+	[self setBounds:NSMakeRect(x, y, width, height)];
 }
 
 - (void)setNumberOfIterations:(NSUInteger)numberOfIterations
