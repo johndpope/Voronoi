@@ -12,8 +12,6 @@
 
 @interface VoronoiEdge ()
 
-@property (nonatomic, readwrite) NSPoint start;
-@property (nonatomic, readwrite) NSPoint end;
 @property (nonatomic, readwrite) VoronoiSiteEvent *leftSiteEvent;
 @property (nonatomic, readwrite) VoronoiSiteEvent *rightSiteEvent;
 @property (nonatomic, readwrite) CGFloat direction;
