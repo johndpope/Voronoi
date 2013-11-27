@@ -81,6 +81,18 @@
 	_numberOfIterations = (numberOfIterations > 0 ? numberOfIterations : 1);
 }
 
+- (NSArray *)solve
+{
+	NSMutableArray *cells = [NSMutableArray array];
+	
+	for(NSInteger iteration = 0; iteration < [self numberOfIterations]; ++iteration)
+	{
+		
+	}
+	
+	return [NSArray arrayWithArray:cells];
+}
+
 #pragma mark - NSObject
 
 - (id)init

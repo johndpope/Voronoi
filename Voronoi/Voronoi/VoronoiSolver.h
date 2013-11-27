@@ -16,5 +16,6 @@
 
 - (void)reset;
 - (void)addSiteEvents:(NSArray *)siteEvents;
+- (NSArray *)solve;
 
 @end
