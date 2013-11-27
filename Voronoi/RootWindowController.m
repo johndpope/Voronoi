@@ -12,12 +12,13 @@
 
 #import "VoronoiView.h"
 #import "MTRandom.h"
-#import "Voronoi.h";
+#import "Voronoi.h"
 
 @interface RootWindowController ()
 
 @property (nonatomic) VoronoiView *voronoiView;
 @property (nonatomic) CreateDiagramPanel *createDiagramPanel;
+@property (nonatomic) VoronoiSolver *voronoiSolver;
 
 @end
 
@@ -58,6 +59,12 @@
 		}
 	}
 	
+	[[self voronoiSolver] reset];
+	
+	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
+	
+	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
@@ -92,6 +99,12 @@
 		[siteEvents addObject:siteEvent];
 	}
 	
+	[[self voronoiSolver] reset];
+	
+	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
+	
+	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
@@ -118,6 +131,14 @@
 	VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:origin];
 	
 	[siteEvents addObject:siteEvent];
+	
+	//
+	
+	[[self voronoiSolver] reset];
+	
+	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
+	
+	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
@@ -177,6 +198,8 @@
 		[self setVoronoiView:[[VoronoiView alloc] init]];
 		
 		[self setCreateDiagramPanel:[[CreateDiagramPanel alloc] initWithContentRect:NSMakeRect(0.0, 0.0, 280.0, 350.0) styleMask:NSClosableWindowMask backing:NSBackingStoreBuffered defer:YES]];
+		
+		[self setVoronoiSolver:[[VoronoiSolver alloc] init]];
 		
 		[[self createDiagramPanel] setDiagramDelegate:self];
 		
