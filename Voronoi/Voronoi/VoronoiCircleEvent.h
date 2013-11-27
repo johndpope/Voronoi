@@ -10,6 +10,10 @@
 
 #import "VoronoiEvent.h"
 
+@class VoronoiParabola;
+
 @interface VoronoiCircleEvent : VoronoiEvent
+
+@property (nonatomic) VoronoiParabola *parabola;
 
 @end
