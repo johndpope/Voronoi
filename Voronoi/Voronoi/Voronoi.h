@@ -8,8 +8,10 @@
 //*******
 //
 
+#import "VoronoiEdge.h"
 #import "VoronoiEvent.h"
+#import "VoronoiCell.h"
 #import "VoronoiCircleEvent.h"
+#import "VoronoiParabola.h"
 #import "VoronoiSiteEvent.h"
 #import "VoronoiSolver.h"
-#import "VoronoiParabola.h"
