@@ -11,6 +11,8 @@
 #import "RootWindowController.h"
 
 #import "VoronoiView.h"
+#import "MTRandom.h"
+#import "Voronoi.h";
 
 @interface RootWindowController ()
 
@@ -23,7 +25,7 @@
 
 #pragma mark - CreateDiagramPanel
 
-- (void)createDiagramPanelDidConfirmWithGridDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations columns:(NSInteger)columns rows:(NSInteger)rows
+- (void)createDiagramPanelDidConfirmWithGridDiagramType:(CreateDiagramPanel *)panel xMargin:(NSUInteger)xMargin yMargin:(NSUInteger)yMargin numberOfIterations:(NSUInteger)numberOfIterations columns:(NSUInteger)columns rows:(NSUInteger)rows
 {
 	[[self window] endSheet:panel];
 	
@@ -33,9 +35,35 @@
 	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
 	
 	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	
+	CGFloat xStep = (rectangle.size.width / columns);
+	CGFloat yStep = (rectangle.size.height / rows);
+	CGFloat xHalfStep = (xStep / 2.0);
+	CGFloat yHalfStep = (yStep / 2.0);
+	
+	NSMutableArray *siteEvents = [NSMutableArray array];
+	
+	for(NSInteger row = 0; row < rows; ++row)
+	{
+		for(NSInteger column = 0; column < columns; ++column)
+		{
+			CGPoint position = rectangle.origin;
+			
+			position.x += ((column * xStep) + xHalfStep);
+			position.y += ((row * yStep) + yHalfStep);
+			
+			VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:position];
+			
+			[siteEvents addObject:siteEvent];
+		}
+	}
+	
+	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
+	[[self voronoiView] setNeedsDisplay:YES];
 }
 
-- (void)createDiagramPanelDidConfirmWithRandomDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations numberOfSites:(NSInteger)numberOfSites seed:(NSInteger)seed
+- (void)createDiagramPanelDidConfirmWithRandomDiagramType:(CreateDiagramPanel *)panel xMargin:(NSUInteger)xMargin yMargin:(NSUInteger)yMargin numberOfIterations:(NSUInteger)numberOfIterations numberOfSites:(NSUInteger)numberOfSites seed:(NSUInteger)seed
 {
 	[[self window] endSheet:panel];
 	
@@ -45,9 +73,31 @@
 	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
 	
 	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	
+	unsigned int randomSeed = (unsigned int)seed;
+	
+	MTRandom *randomNumberGenerator = [[MTRandom alloc] initWithSeed:randomSeed];
+	
+	NSMutableArray *siteEvents = [NSMutableArray array];
+	
+	for(NSInteger index = 0; index < numberOfSites; ++index)
+	{
+		CGPoint position = NSZeroPoint;
+		
+		position.x = [randomNumberGenerator randomDoubleFrom:rectangle.origin.x to:(rectangle.origin.x + rectangle.size.width)];
+		position.y = [randomNumberGenerator randomDoubleFrom:rectangle.origin.y to:(rectangle.origin.y + rectangle.size.height)];
+		
+		VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:position];
+		
+		[siteEvents addObject:siteEvent];
+	}
+	
+	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
+	[[self voronoiView] setNeedsDisplay:YES];
 }
 
-- (void)createDiagramPanelDidConfirmWithSpiralDiagramType:(CreateDiagramPanel *)panel xMargin:(NSInteger)xMargin yMargin:(NSInteger)yMargin numberOfIterations:(NSInteger)numberOfIterations spiralChord:(CGFloat)spiralChord
+- (void)createDiagramPanelDidConfirmWithSpiralDiagramType:(CreateDiagramPanel *)panel xMargin:(NSUInteger)xMargin yMargin:(NSUInteger)yMargin numberOfIterations:(NSUInteger)numberOfIterations spiralChord:(CGFloat)spiralChord
 {
 	[[self window] endSheet:panel];
 	
@@ -57,6 +107,21 @@
 	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
 	
 	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	
+	CGPoint origin = NSZeroPoint;
+	
+	origin.x = (rectangle.origin.x + (rectangle.size.width / 2.0));
+	origin.y = (rectangle.origin.y + (rectangle.size.height / 2.0));
+	
+	NSMutableArray *siteEvents = [NSMutableArray array];
+	
+	VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:origin];
+	
+	[siteEvents addObject:siteEvent];
+	
+	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
+	[[self voronoiView] setNeedsDisplay:YES];
 }
 
 - (void)createDiagramPanelDidCancel:(CreateDiagramPanel *)panel
