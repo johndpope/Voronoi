@@ -310,13 +310,13 @@ CGFloat const DiagramMinimumRequiredRegion = 100.0;
 		[[self diagramTypePopUpButton] setTarget:self];
 		[[self diagramTypePopUpButton] setAction:@selector(diagramTypePopUpButtonEventHandler:)];
 		
-		[[self xMarginTextField] setFloatValue:0.0];
+		[[self xMarginTextField] setFloatValue:100.0];
 		[[self xMarginTextField] setFormatter:[self numberFormatter]];
 		[[self xMarginTextField] sizeToFit];
 		[[self xMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.xMarginTextField.frame.size.height)];
 		[[self xMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.xMarginTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.diagramTypePopUpButton.frame.origin.y - self.diagramTypePopUpButton.frame.size.height) - CreateDiagramPanelPadding))];
 		
-		[[self yMarginTextField] setFloatValue:0.0];
+		[[self yMarginTextField] setFloatValue:100.0];
 		[[self yMarginTextField] setFormatter:[self numberFormatter]];
 		[[self yMarginTextField] sizeToFit];
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
@@ -346,7 +346,7 @@ CGFloat const DiagramMinimumRequiredRegion = 100.0;
 		[[self gridRowsTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.gridRowsTextField.frame.size.height)];
 		[[self gridRowsTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.gridRowsTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.gridColumnsTextField.frame.origin.y - self.gridColumnsTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
-		[[self spiralChordTextField] setIntegerValue:10];
+		[[self spiralChordTextField] setIntegerValue:35];
 		[[self spiralChordTextField] setFormatter:[self numberFormatter]];
 		[[self spiralChordTextField] sizeToFit];
 		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
