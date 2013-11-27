@@ -134,18 +134,24 @@
 	
 	CGFloat maximumRadius = MIN((rectangle.size.width / 2.0), (rectangle.size.height / 2.0));
 	
-	for(CGFloat radius = spiralChord; radius < maximumRadius; radius += spiralChord)
+	CGFloat maximumTheta = ((maximumRadius / spiralChord) * (2.0 * M_PI));
+	
+	CGFloat step = maximumRadius / maximumTheta;
+	
+	for(CGFloat theta = spiralChord / step; theta <= maximumTheta;)
 	{
-		NSPoint position = NSZeroPoint;
+		CGPoint position = NSZeroPoint;
 		
-		CGFloat angle = M_PI / 2.0;
+		CGFloat distance = step * theta;
 		
-		position.x = (origin.x + (cosf(angle) * radius));
-		position.y = (origin.y + (sinf(angle) * radius));
+		position.x = (origin.x + (cosf(theta) * distance));
+		position.y = (origin.y + (sinf(theta) * distance));
 		
 		VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:position];
 		
 		[siteEvents addObject:siteEvent];
+		
+		theta += (spiralChord / distance);
 	}
 	
 	[[self voronoiSolver] reset];
