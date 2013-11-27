@@ -18,6 +18,7 @@
 		13A5B1DF18281FAE00B94AC8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A5B1DE18281FAE00B94AC8 /* Images.xcassets */; };
 		13F3BF0F182842D9003ED9CB /* MTRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F3BF0E182842D9003ED9CB /* MTRandom.m */; };
 		1817F2A8184613E00041D2F0 /* VoronoiParabola.m in Sources */ = {isa = PBXBuildFile; fileRef = 1817F2A7184613E00041D2F0 /* VoronoiParabola.m */; };
+		1817F2AB18461D550041D2F0 /* VoronoiSolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 1817F2AA18461D550041D2F0 /* VoronoiSolver.m */; };
 		1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1825B1A21843821E00FED617 /* NumberFormatter.m */; };
 		18279CC31844CBEF003E8B5F /* VoronoiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC21844CBEF003E8B5F /* VoronoiEvent.m */; };
 		18279CC61844CC8A003E8B5F /* VoronoiSiteEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC51844CC8A003E8B5F /* VoronoiSiteEvent.m */; };
@@ -49,6 +50,8 @@
 		13F3BF0E182842D9003ED9CB /* MTRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTRandom.m; sourceTree = "<group>"; };
 		1817F2A6184613E00041D2F0 /* VoronoiParabola.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiParabola.h; path = Voronoi/VoronoiParabola.h; sourceTree = "<group>"; };
 		1817F2A7184613E00041D2F0 /* VoronoiParabola.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoronoiParabola.m; path = Voronoi/VoronoiParabola.m; sourceTree = "<group>"; };
+		1817F2A918461D550041D2F0 /* VoronoiSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiSolver.h; path = Voronoi/VoronoiSolver.h; sourceTree = "<group>"; };
+		1817F2AA18461D550041D2F0 /* VoronoiSolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoronoiSolver.m; path = Voronoi/VoronoiSolver.m; sourceTree = "<group>"; };
 		1825B1A11843821E00FED617 /* NumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberFormatter.h; sourceTree = "<group>"; };
 		1825B1A21843821E00FED617 /* NumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberFormatter.m; sourceTree = "<group>"; };
 		18279CC11844CBEF003E8B5F /* VoronoiEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiEvent.h; path = Voronoi/VoronoiEvent.h; sourceTree = "<group>"; };
@@ -196,6 +199,8 @@
 				1817F2A7184613E00041D2F0 /* VoronoiParabola.m */,
 				18279CC41844CC8A003E8B5F /* VoronoiSiteEvent.h */,
 				18279CC51844CC8A003E8B5F /* VoronoiSiteEvent.m */,
+				1817F2A918461D550041D2F0 /* VoronoiSolver.h */,
+				1817F2AA18461D550041D2F0 /* VoronoiSolver.m */,
 			);
 			name = Voronoi;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1334FD1F182AC6C200657B69 /* CreateDiagramPanel.m in Sources */,
+				1817F2AB18461D550041D2F0 /* VoronoiSolver.m in Sources */,
 				13461A92183423E100263477 /* VoronoiView.m in Sources */,
 				1817F2A8184613E00041D2F0 /* VoronoiParabola.m in Sources */,
 				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
