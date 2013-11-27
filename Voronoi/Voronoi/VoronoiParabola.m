@@ -12,12 +12,8 @@
 
 @interface VoronoiParabola ()
 
-@property (nonatomic, readwrite) BOOL isLeafNode;
-@property (nonatomic, readwrite) VoronoiCircleEvent *circleEvent;
 @property (nonatomic, readwrite) VoronoiSiteEvent *siteEvent;
 @property (nonatomic, readwrite) VoronoiParabola *parentParabola;
-@property (nonatomic, readwrite) VoronoiParabola *leftParabola;
-@property (nonatomic, readwrite) VoronoiParabola *rightParabola;
 
 @end
 
