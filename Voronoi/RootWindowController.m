@@ -65,6 +65,8 @@
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
+	[[self voronoiSolver] solve];
+	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
@@ -104,6 +106,8 @@
 	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
+	[[self voronoiSolver] solve];
 	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
@@ -159,6 +163,8 @@
 	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	
+	[[self voronoiSolver] solve];
 	
 	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
