@@ -102,6 +102,8 @@
 
 - (NSArray *)solve
 {
+	NSLog(@"%s", __PRETTY_FUNCTION__);
+	
 	for(NSInteger iteration = 0; iteration < [self numberOfIterations]; ++iteration)
 	{
 		[self processEvents];
