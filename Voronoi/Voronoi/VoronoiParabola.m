@@ -25,14 +25,14 @@
 {
 	[leftParabola setParentParabola:self];
 	
-	[self setLeftParabola:leftParabola];
+	_leftParabola = leftParabola;
 }
 
 - (void)setRightParabola:(VoronoiParabola *)rightParabola
 {
 	[rightParabola setParentParabola:self];
 	
-	[self setRightParabola:rightParabola];
+	_rightParabola = rightParabola;
 }
 
 - (VoronoiParabola *)leftParentParabola
