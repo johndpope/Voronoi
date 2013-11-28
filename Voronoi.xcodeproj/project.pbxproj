@@ -25,6 +25,7 @@
 		18279CC31844CBEF003E8B5F /* VoronoiEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC21844CBEF003E8B5F /* VoronoiEvent.m */; };
 		18279CC61844CC8A003E8B5F /* VoronoiSiteEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC51844CC8A003E8B5F /* VoronoiSiteEvent.m */; };
 		18279CC91844CCA9003E8B5F /* VoronoiCircleEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 18279CC81844CCA9003E8B5F /* VoronoiCircleEvent.m */; };
+		18B4141F18474BA5009A12DA /* VoronoiCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B4141E18474BA5009A12DA /* VoronoiCorner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,8 @@
 		18279CC71844CCA9003E8B5F /* VoronoiCircleEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiCircleEvent.h; path = Voronoi/VoronoiCircleEvent.h; sourceTree = "<group>"; };
 		18279CC81844CCA9003E8B5F /* VoronoiCircleEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoronoiCircleEvent.m; path = Voronoi/VoronoiCircleEvent.m; sourceTree = "<group>"; };
 		18279CCB1844CCF3003E8B5F /* Voronoi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Voronoi.h; path = Voronoi/Voronoi.h; sourceTree = "<group>"; };
+		18B4141D18474BA5009A12DA /* VoronoiCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoronoiCorner.h; path = Voronoi/VoronoiCorner.h; sourceTree = "<group>"; };
+		18B4141E18474BA5009A12DA /* VoronoiCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VoronoiCorner.m; path = Voronoi/VoronoiCorner.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +204,8 @@
 				1323BF4D1846794300A348CE /* VoronoiCell.m */,
 				18279CC71844CCA9003E8B5F /* VoronoiCircleEvent.h */,
 				18279CC81844CCA9003E8B5F /* VoronoiCircleEvent.m */,
+				18B4141D18474BA5009A12DA /* VoronoiCorner.h */,
+				18B4141E18474BA5009A12DA /* VoronoiCorner.m */,
 				1323BF4F18467F3500A348CE /* VoronoiEdge.h */,
 				1323BF5018467F3500A348CE /* VoronoiEdge.m */,
 				18279CC11844CBEF003E8B5F /* VoronoiEvent.h */,
@@ -286,6 +291,7 @@
 				1323BF5118467F3500A348CE /* VoronoiEdge.m in Sources */,
 				1817F2A8184613E00041D2F0 /* VoronoiParabola.m in Sources */,
 				13350FBC1828228500148C6E /* RootWindowController.m in Sources */,
+				18B4141F18474BA5009A12DA /* VoronoiCorner.m in Sources */,
 				18279CC61844CC8A003E8B5F /* VoronoiSiteEvent.m in Sources */,
 				13A5B1DA18281FAE00B94AC8 /* AppDelegate.m in Sources */,
 				1825B1A31843821E00FED617 /* NumberFormatter.m in Sources */,
