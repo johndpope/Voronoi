@@ -12,6 +12,7 @@
 #import "VoronoiEvent.h"
 #import "VoronoiCell.h"
 #import "VoronoiCircleEvent.h"
+#import "VoronoiCorner.h"
 #import "VoronoiParabola.h"
 #import "VoronoiSiteEvent.h"
 #import "VoronoiSolver.h"

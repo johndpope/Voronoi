@@ -10,6 +10,14 @@
 
 #import "VoronoiEvent.h"
 
+@class VoronoiEdge;
+
 @interface VoronoiCell : VoronoiEvent
+
+- (void)addEdge:(VoronoiEdge *)edge;
+- (void)addNeighbour:(VoronoiCell *)neighbour;
+- (NSArray *)edges;
+- (NSArray *)corners;
+- (NSArray *)neighbours;
 
 @end
