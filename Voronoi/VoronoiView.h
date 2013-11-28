@@ -12,6 +12,6 @@
 
 @interface VoronoiView : NSView
 
-@property (nonatomic, copy) NSArray *siteEvents;
+@property (nonatomic, copy) NSArray *cells;
 
 @end
