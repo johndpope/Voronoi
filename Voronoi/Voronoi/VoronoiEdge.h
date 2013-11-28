@@ -18,7 +18,7 @@
 @property (nonatomic) NSPoint end;
 @property (nonatomic, readonly) VoronoiSiteEvent *leftSiteEvent;
 @property (nonatomic, readonly) VoronoiSiteEvent *rightSiteEvent;
-@property (nonatomic, readonly) CGFloat direction;
+@property (nonatomic, readonly) NSPoint direction;
 @property (nonatomic, readonly) CGFloat f;
 @property (nonatomic, readonly) CGFloat g;
 @property (nonatomic, retain) VoronoiEdge *neighbour;
