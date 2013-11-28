@@ -102,8 +102,6 @@
 
 - (NSArray *)solve
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	
 	for(NSInteger iteration = 0; iteration < [self numberOfIterations]; ++iteration)
 	{
 		[self processEvents];
@@ -135,13 +133,19 @@
 
 - (void)processEdges
 {
+	[[self edges] enumerateObjectsUsingBlock:^(VoronoiEdge *edge, NSUInteger idx, BOOL *stop)
+	{
+		VoronoiCell *leftCell = [self findOrCreateCellAtPosition:[[edge leftSiteEvent] position]];
+		VoronoiCell *rightCell = [self findOrCreateCellAtPosition:[[edge rightSiteEvent] position]];
+		
+		[leftCell addEdge:edge];
+		[rightCell addEdge:edge];
 	
+	}];
 }
 
 - (void)processEvents
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	
 	while([[self eventQueue] lastObject])
 	{
 		id event = [[self eventQueue] lastObject];
@@ -166,8 +170,6 @@
 
 - (void)processSiteEvent:(VoronoiSiteEvent *)siteEvent
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	
 	if(![self rootParabola])
 	{
 		[self setRootParabola:[[VoronoiParabola alloc] initWithSiteEvent:siteEvent]];
@@ -240,8 +242,6 @@
 
 - (void)processCircleEvent:(VoronoiCircleEvent *)circleEvent
 {
-	NSLog(@"%s", __PRETTY_FUNCTION__);
-	
 	VoronoiParabola *parabola = [circleEvent parabola];
 	
 	VoronoiParabola *leftParentParabola = [parabola leftParentParabola];
@@ -267,7 +267,7 @@
 	NSPoint point = NSMakePoint(circleEvent.position.x, [self yOfSiteEvent:[parabola siteEvent] intersectingWithEvent:circleEvent]);
 	
 	[[leftParentParabola edge] setEnd:point];
-	[[rightChildParabola edge] setEnd:point];
+	[[rightParentParabola edge] setEnd:point];
 	
 	VoronoiParabola *rootParabola = nil;
 	VoronoiParabola *parentParabola = parabola;
@@ -336,7 +336,30 @@
 
 - (void)finishEdge:(VoronoiParabola *)parabola
 {
+	CGFloat x = parabola.edge.start.x;
 	
+	CGFloat maxX = (self.bounds.origin.x + self.bounds.size.width);
+	
+	if(parabola.edge.direction.x > 0.0)
+	{
+		x = MAX(x, maxX);
+	}
+	else
+	{
+		x = MIN(x, self.bounds.origin.x);
+	}
+	
+	[[parabola edge] setEnd:NSMakePoint(x, (parabola.edge.f * x + parabola.edge.g))];
+	
+	if([parabola leftParabola] && ![[parabola leftParabola] isLeafNode])
+	{
+		[self finishEdge:[parabola leftParabola]];
+	}
+	
+	if([parabola rightParabola] && ![[parabola rightParabola] isLeafNode])
+	{
+		[self finishEdge:[parabola rightParabola]];
+	}
 }
 
 - (void)relaxCells
@@ -369,22 +392,143 @@
 
 - (CGFloat)xOfParabola:(VoronoiParabola *)parabola intersectingSiteEvent:(VoronoiSiteEvent *)siteEvent
 {
-	return 0.0;
+	VoronoiParabola *leftChildParabola = [parabola leftChildParabola];
+	VoronoiParabola *rightChildParabola = [parabola rightChildParabola];
+	
+	NSPoint leftPoint = [[leftChildParabola siteEvent] position];
+	NSPoint rightPoint = [[rightChildParabola siteEvent] position];
+	
+	CGFloat dotProduct = (2.0 * (leftPoint.y - siteEvent.position.y));
+	CGFloat a1 = (1.0 / dotProduct);
+	CGFloat b1 = (-2.0 * (leftPoint.x / dotProduct));
+	CGFloat c1 = (siteEvent.position.y + dotProduct / 4.0 + leftPoint.x * leftPoint.x / dotProduct);
+	
+	dotProduct = (2.0 * (rightPoint.y - siteEvent.position.y));
+	CGFloat a2 = (1.0 / dotProduct);
+	CGFloat b2 = (-2.0 * (rightPoint.x / dotProduct));
+	CGFloat c2 = (siteEvent.position.y + dotProduct / 4.0 + rightPoint.x * rightPoint.x / dotProduct);
+	
+	CGFloat a = (a1 - a2);
+	CGFloat b = (b1 - b2);
+	CGFloat c = (c1 - c2);
+	
+	CGFloat discriminant = (b * b - 4.0 * a * c);
+	
+	CGFloat x1 = (-b + sqrtf(discriminant)) / (2.0 * a);
+	CGFloat x2 = (-b - sqrtf(discriminant)) / (2.0 * a);
+	
+	return ((leftPoint.y < rightPoint.y) ? MAX(x1, x2) : MIN(x1, x2));
 }
 
 - (CGFloat)yOfSiteEvent:(VoronoiSiteEvent *)siteEvent intersectingWithEvent:(VoronoiEvent *)event
 {
-	return 0.0;
+	CGFloat dotProduct = (2.0 * (siteEvent.position.y - event.position.y));
+	
+	CGFloat b1 = (-2.0 * siteEvent.position.x / dotProduct);
+	CGFloat c1 = (event.position.y + dotProduct / 4.0 + siteEvent.position.x * siteEvent.position.x / dotProduct);
+	
+	return (event.position.x * event.position.x / dotProduct + b1 * event.position.x + c1);
 }
 
 - (void)checkAndCreateCircleEventWithEvent:(VoronoiEvent *)event andParabola:(VoronoiParabola *)parabola
 {
+	VoronoiParabola *leftParentParabola = [parabola leftParentParabola];
+	VoronoiParabola *rightParentParabola = [parabola rightParentParabola];
 	
+	VoronoiParabola *leftChildParabola = (!leftParentParabola ? nil : [leftParentParabola leftChildParabola]);
+	VoronoiParabola *rightChildParabola = (!rightParentParabola ? nil : [rightParentParabola rightChildParabola]);
+	
+	if(!leftChildParabola || !rightChildParabola || ([[leftChildParabola siteEvent] isEqualTo:[rightChildParabola siteEvent]]))
+	{
+		return;
+	}
+	
+	NSPoint point = [self pointIntersectingEdge:[leftParentParabola edge] andEdge:[rightParentParabola edge]];
+	
+	if(NSEqualPoints(NSZeroPoint, point))
+	{
+		return;
+	}
+	
+	CGFloat x = (point.x - leftChildParabola.siteEvent.position.x);
+	CGFloat y = (point.y - leftChildParabola.siteEvent.position.y);
+	
+	CGFloat distance = sqrtf((x * x) + (y * y));
+	
+	if((point.y - distance) >= event.position.y)
+	{
+		return;
+	}
+	
+	VoronoiCircleEvent *circleEvent = [[VoronoiCircleEvent alloc] initWithPosition:NSMakePoint(point.x, (point.y - distance))];
+	
+	[circleEvent setParabola:parabola];
+	
+	[parabola setCircleEvent:circleEvent];
+	
+	[[self eventQueue] addObject:circleEvent];
 }
 
 - (NSPoint)pointIntersectingEdge:(VoronoiEdge *)edge andEdge:(VoronoiEdge *)other
 {
-	return NSZeroPoint;
+	CGFloat x = ((other.g - edge.g) / (edge.f - other.f));
+	CGFloat y = (edge.f * x + edge.g);
+	
+	if(edge.direction.x == 0.0 || other.direction.x == 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(edge.direction.y == 0.0 || other.direction.y == 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(((x - edge.start.x) / edge.direction.x) < 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(((x - other.start.x) / other.direction.x) < 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(((y - edge.start.y) / edge.direction.y) > 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(((y - other.start.y) / other.direction.y) > 0.0)
+	{
+		return NSZeroPoint;
+	}
+	
+	if(fabs(edge.direction.x) < 0.01 && fabs(other.direction.x) < 0.01)
+	{
+		return NSZeroPoint;
+	}
+	
+	return NSMakePoint(x, y);
+}
+
+- (VoronoiCell *)findOrCreateCellAtPosition:(NSPoint)position
+{
+	VoronoiCell *result = nil;
+	
+	for(VoronoiCell *cell in [self cells])
+	{
+		if(NSEqualPoints([cell position], position))
+		{
+			return cell;
+		}
+	}
+	
+	result = [[VoronoiCell alloc] initWithPosition:position];
+	
+	[[self cells] addObject:result];
+	
+	return result;
 }
 
 #pragma mark - NSObject
