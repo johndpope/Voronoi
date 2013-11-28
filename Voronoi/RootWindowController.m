@@ -65,9 +65,9 @@
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
-	[[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solve];
 	
-	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	[[self voronoiView] setCells:cells];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }
@@ -107,9 +107,17 @@
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
-	[[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solve];
 	
-	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	NSLog(@"created %li cells from %li site events", [cells count], [siteEvents count]);
+	
+	[cells enumerateObjectsUsingBlock:^(VoronoiCell *cell, NSUInteger idx, BOOL *stop)
+	{
+		NSLog(@"cell has %li edges and %li corners", [[cell edges] count], [[cell corners] count]);
+		
+	}];
+	
+	[[self voronoiView] setCells:cells];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }
@@ -164,9 +172,9 @@
 	
 	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
 	
-	[[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solve];
 	
-	[[self voronoiView] setSiteEvents:[NSArray arrayWithArray:siteEvents]];
+	[[self voronoiView] setCells:cells];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }
