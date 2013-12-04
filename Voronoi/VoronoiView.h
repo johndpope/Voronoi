@@ -13,5 +13,6 @@
 @interface VoronoiView : NSView
 
 @property (nonatomic, copy) NSArray *cells;
+@property (nonatomic) NSRect contentFrame;
 
 @end

@@ -41,6 +41,10 @@
 	[bezierPath fill];
 	[bezierPath stroke];
 	
+	bezierPath = [NSBezierPath bezierPathWithRect:[self contentFrame]];
+	
+	[bezierPath stroke];
+	
 	[[self edgeStrokeColor] setStroke];
 	
 	[[cell edges] enumerateObjectsUsingBlock:^(VoronoiEdge *edge, NSUInteger idx, BOOL *stop)
