@@ -31,5 +31,6 @@
 - (VoronoiParabola *)rightParentParabola;
 - (VoronoiParabola *)leftChildParabola;
 - (VoronoiParabola *)rightChildParabola;
+- (VoronoiParabola *)childParabolaIntersectingSiteEvent:(VoronoiSiteEvent *)siteEvent;
 
 @end

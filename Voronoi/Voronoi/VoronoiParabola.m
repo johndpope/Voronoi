@@ -10,6 +10,8 @@
 
 #import "VoronoiParabola.h"
 
+#import "VoronoiSiteEvent.h"
+
 @interface VoronoiParabola ()
 
 @property (nonatomic, retain, readwrite) VoronoiParabola *parentParabola;
@@ -85,11 +87,6 @@
 	
 	while(![parabola isLeafNode])
 	{
-		if(![parabola rightParabola])
-		{
-			return nil;
-		}
-		
 		parabola = [parabola rightParabola];
 	}
 	
@@ -102,12 +99,26 @@
 	
 	while(![parabola isLeafNode])
 	{
-		if(![parabola leftParabola])
-		{
-			return nil;
-		}
-		
 		parabola = [parabola leftParabola];
+	}
+	
+	return parabola;
+}
+
+- (VoronoiParabola *)childParabolaIntersectingSiteEvent:(VoronoiSiteEvent *)siteEvent
+{
+	VoronoiParabola *parabola = self;
+	
+	while(![parabola isLeafNode])
+	{
+		if(parabola.leftParabola.siteEvent.position.x > siteEvent.position.x)
+		{
+			parabola = [parabola leftParabola];
+		}
+		else
+		{
+			parabola = [parabola rightParabola];
+		}
 	}
 	
 	return parabola;
