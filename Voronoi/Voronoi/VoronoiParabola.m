@@ -12,8 +12,10 @@
 
 @interface VoronoiParabola ()
 
-@property (nonatomic, readwrite) VoronoiSiteEvent *siteEvent;
-@property (nonatomic, readwrite) VoronoiParabola *parentParabola;
+@property (nonatomic, retain, readwrite) VoronoiParabola *parentParabola;
+@property (nonatomic, retain, readwrite) VoronoiParabola *leftParabola;
+@property (nonatomic, retain, readwrite) VoronoiParabola *rightParabola;
+@property (nonatomic, retain, readwrite) VoronoiSiteEvent *siteEvent;
 
 @end
 
@@ -120,11 +122,14 @@
 	if(self)
 	{
 		[self setSiteEvent:siteEvent];
-		
-		[self setIsLeafNode:([self siteEvent] ? YES : NO)];
 	}
 	
 	return self;
+}
+
+- (BOOL)isLeafNode
+{
+	return (![self leftParabola] && ![self rightParabola]);
 }
 
 @end
