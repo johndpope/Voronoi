@@ -60,14 +60,14 @@
 		{
 			return NSOrderedSame;
 		}
-		
+		 
 		if(siteEvent.position.y < other.position.y)
 		{
 			return NSOrderedAscending;
 		}
-		
+		 
 		return NSOrderedDescending;
-	
+		 
 	}];
 }
 
@@ -86,9 +86,9 @@
 		{
 			return NSOrderedAscending;
 		}
-		
+		 
 		return NSOrderedDescending;
-	
+		 
 	}];
 }
 
@@ -119,9 +119,9 @@
 			[[self cells] enumerateObjectsUsingBlock:^(VoronoiCell *cell, NSUInteger idx, BOOL *stop)
 			{
 				VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:[cell position]];
-				
+				 
 				[newSiteEvents addObject:siteEvent];
-			
+				 
 			}];
 			
 			[self reset];
@@ -178,6 +178,7 @@
 {
 	NSLog(@"processing site event %@", NSStringFromPoint(siteEvent.position));
 	
+	//create root parabola for first site event
 	if(![self rootParabola])
 	{
 		[self setRootParabola:[[VoronoiParabola alloc] initWithSiteEvent:siteEvent]];
@@ -185,6 +186,7 @@
 		return;
 	}
 	
+	//handle edge case where second site event lies on same y coordinate as first site event
 	if([[self rootParabola] isLeafNode] && fabs(self.rootParabola.siteEvent.position.y - siteEvent.position.y) < 1.0)
 	{
 		VoronoiParabola *leftParabola = [[VoronoiParabola alloc] initWithSiteEvent:[[self rootParabola] siteEvent]];
@@ -195,6 +197,19 @@
 		
 		return;
 	}
+	
+	VoronoiParabola *parabola = [[self rootParabola] childParabolaIntersectingSiteEvent:siteEvent];
+	
+	if([parabola circleEvent])
+	{
+		[[self circleEventQueue] removeObject:[parabola circleEvent]];
+		
+		[parabola setCircleEvent:nil];
+	}
+	
+	VoronoiParabola *leftParabola = [[VoronoiParabola alloc] initWithSiteEvent:[parabola siteEvent]];
+	VoronoiParabola *rightParabola = [[VoronoiParabola alloc] initWithSiteEvent:[parabola siteEvent]];
+	VoronoiParabola *middleParabola = [[VoronoiParabola alloc] initWithSiteEvent:siteEvent];
 	
 	
 }
