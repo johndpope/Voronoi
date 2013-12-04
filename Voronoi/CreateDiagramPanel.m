@@ -322,7 +322,9 @@ CGFloat const DiagramMinimumRequiredRegion = 100.0;
 		[[self yMarginTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.yMarginTextField.frame.size.height)];
 		[[self yMarginTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.yMarginTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.xMarginTextField.frame.origin.y - self.xMarginTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
-		[[self numberOfSitesTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32From:1 to:100]];
+		#warning remove me
+		[[self numberOfSitesTextField] setIntegerValue:21];
+		//[[self numberOfSitesTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32From:1 to:100]];
 		[[self numberOfSitesTextField] setFormatter:[self numberFormatter]];
 		[[self numberOfSitesTextField] sizeToFit];
 		[[self numberOfSitesTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.numberOfSitesTextField.frame.size.height)];
@@ -352,7 +354,9 @@ CGFloat const DiagramMinimumRequiredRegion = 100.0;
 		[[self spiralChordTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.spiralChordTextField.frame.size.height)];
 		[[self spiralChordTextField] setFrameOrigin:NSMakePoint((contentView.frame.size.width - (self.spiralChordTextField.frame.size.width + CreateDiagramPanelPadding)), ((self.gridRowsTextField.frame.origin.y - self.gridRowsTextField.frame.size.height) - CreateDiagramPanelPadding))];
 		
-		[[self seedTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32]];
+		#warning remove me
+		[[self seedTextField] setIntegerValue:1337];
+		//[[self seedTextField] setIntegerValue:[[self randomNumberGenerator] randomUInt32]];
 		[[self seedTextField] setFormatter:[self numberFormatter]];
 		[[self seedTextField] sizeToFit];
 		[[self seedTextField] setFrameSize:NSMakeSize((contentView.frame.size.width / 2.0), self.seedTextField.frame.size.height)];
