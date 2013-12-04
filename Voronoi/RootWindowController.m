@@ -32,10 +32,7 @@
 	
 	NSView *contentView = self.window.contentView;
 	
-	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
-	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
-	
-	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	NSRect rectangle = NSInsetRect(contentView.frame, xMargin, yMargin);
 	
 	CGFloat xStep = (rectangle.size.width / columns);
 	CGFloat yStep = (rectangle.size.height / rows);
@@ -59,15 +56,10 @@
 		}
 	}
 	
-	[[self voronoiSolver] reset];
-	
-	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
-	
-	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
-	
-	NSArray *cells = [[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solveSiteEvents:siteEvents numberOfIterations:numberOfIterations bounds:rectangle];
 	
 	[[self voronoiView] setCells:cells];
+	[[self voronoiView] setContentFrame:rectangle];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }
@@ -78,10 +70,7 @@
 	
 	NSView *contentView = self.window.contentView;
 	
-	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
-	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
-	
-	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	NSRect rectangle = NSInsetRect(contentView.frame, xMargin, yMargin);
 	
 	unsigned int randomSeed = (unsigned int)seed;
 	
@@ -93,21 +82,15 @@
 	{
 		CGPoint position = NSZeroPoint;
 		
-		position.x = [randomNumberGenerator randomDoubleFrom:rectangle.origin.x to:(rectangle.origin.x + rectangle.size.width)];
-		position.y = [randomNumberGenerator randomDoubleFrom:rectangle.origin.y to:(rectangle.origin.y + rectangle.size.height)];
+		position.x = rectangle.origin.x + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.width];
+		position.y = rectangle.origin.y + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.height];
 		
 		VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:position];
 		
 		[siteEvents addObject:siteEvent];
 	}
 	
-	[[self voronoiSolver] reset];
-	
-	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
-	
-	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
-	
-	NSArray *cells = [[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solveSiteEvents:siteEvents numberOfIterations:numberOfIterations bounds:rectangle];
 	
 	NSLog(@"created %li cells from %li site events", [cells count], [siteEvents count]);
 	
@@ -118,6 +101,7 @@
 	}];
 	
 	[[self voronoiView] setCells:cells];
+	[[self voronoiView] setContentFrame:rectangle];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }
@@ -128,10 +112,7 @@
 	
 	NSView *contentView = self.window.contentView;
 	
-	CGFloat x = (xMargin > 0 ? (xMargin / 2.0) : xMargin);
-	CGFloat y = (yMargin > 0 ? (yMargin / 2.0) : yMargin);
-	
-	NSRect rectangle = NSMakeRect(x, y, (contentView.frame.size.width - xMargin), (contentView.frame.size.height - yMargin));
+	NSRect rectangle = NSInsetRect(contentView.frame, xMargin, yMargin);
 	
 	CGPoint origin = NSZeroPoint;
 	
@@ -166,15 +147,10 @@
 		theta += (spiralChord / distance);
 	}
 	
-	[[self voronoiSolver] reset];
-	
-	[[self voronoiSolver] setNumberOfIterations:numberOfIterations];
-	
-	[[self voronoiSolver] addSiteEvents:[NSArray arrayWithArray:siteEvents]];
-	
-	NSArray *cells = [[self voronoiSolver] solve];
+	NSArray *cells = [[self voronoiSolver] solveSiteEvents:siteEvents numberOfIterations:numberOfIterations bounds:rectangle];
 	
 	[[self voronoiView] setCells:cells];
+	[[self voronoiView] setContentFrame:rectangle];
 	
 	[[self voronoiView] setNeedsDisplay:YES];
 }

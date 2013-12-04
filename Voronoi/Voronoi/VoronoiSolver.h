@@ -12,10 +12,6 @@
 
 @interface VoronoiSolver : NSObject
 
-@property (nonatomic) NSUInteger numberOfIterations;
-
-- (void)reset;
-- (void)addSiteEvents:(NSArray *)siteEvents;
-- (NSArray *)solve;
+- (NSArray *)solveSiteEvents:(NSArray *)siteEvents numberOfIterations:(NSInteger)numberOfIterations bounds:(NSRect)bounds;
 
 @end
