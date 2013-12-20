@@ -111,7 +111,7 @@
 	
 	while(![parabola isLeafNode])
 	{
-		if(parabola.leftParabola.siteEvent.position.x > siteEvent.position.x)
+		if(parabola.siteEvent.position.x > siteEvent.position.x)
 		{
 			parabola = [parabola leftParabola];
 		}

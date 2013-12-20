@@ -82,8 +82,8 @@
 	{
 		CGPoint position = NSZeroPoint;
 		
-		position.x = rectangle.origin.x + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.width];
-		position.y = rectangle.origin.y + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.height];
+		position.x = floorf(rectangle.origin.x + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.width]);
+		position.y = floorf(rectangle.origin.y + [randomNumberGenerator randomDoubleFrom:0.0 to:rectangle.size.height]);
 		
 		VoronoiSiteEvent *siteEvent = [[VoronoiSiteEvent alloc] initWithPosition:position];
 		
